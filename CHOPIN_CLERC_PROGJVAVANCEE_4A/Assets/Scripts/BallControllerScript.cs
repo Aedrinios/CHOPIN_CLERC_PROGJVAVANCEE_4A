@@ -19,8 +19,8 @@ public class BallControllerScript : MonoBehaviour
     private void Start()
     {
         float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f); 
-        float zDirection = UnityEngine.Random.Range(0.0f, 1.0f);
-        direction = new Vector3(xDirection, 0.0f, zDirection);
+        float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
+        direction = new Vector3(xDirection,yDirection,0.0f);
     }
 
     // Update is called once per frame
@@ -31,10 +31,16 @@ public class BallControllerScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
+        
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
-            direction = new Vector3(-direction.x, direction.y, direction.z);
+        {
+            
+            direction = new Vector3(direction.x, -direction.y, 0.0f);
+            speed++;
+        }
 
         else if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            direction = new Vector3(direction.x, direction.y, -direction.z);
+            direction = new Vector3(direction.x, direction.y, 0.0f);
     }
 }
