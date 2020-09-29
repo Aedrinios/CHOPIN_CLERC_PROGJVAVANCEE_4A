@@ -266,6 +266,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ZoneStart: {fileID: 582177191}
+--- !u!1 &429864886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 429864887}
+  m_Layer: 0
+  m_Name: RespawnZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &429864887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429864886}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 88.72207, y: 98.54048, z: 142.4497}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1548345155}
+  - {fileID: 1936945094}
+  - {fileID: 582177191}
+  m_Father: {fileID: 1376598501}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438108138
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAxisInput: Horizontal
   jumpInput: JumpP1
-  name: 'Jean Castex '
+  name: "Jean Castex, Roi des Fran\xE7ais"
   playerIndex: Player1
   playerSpeed: 9
   jumpForce: 4
@@ -440,7 +473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 582177191}
   m_Layer: 0
-  m_Name: RespawnStart
+  m_Name: RespawnBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,11 +487,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582177190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.420193, y: -0.7, z: -26.892736}
+  m_LocalPosition: {x: -4.4000015, y: 29.423035, z: -1.1929932}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 874103106}
-  m_RootOrder: 4
+  m_Father: {fileID: 429864887}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &688803565
 GameObject:
@@ -496,7 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAxisInput: HorizontalP2
   jumpInput: JumpP2
-  name: Patrick Balkani
+  name: Patrick Balkany, Roi des Roublards
   playerIndex: Player2
   playerSpeed: 9
   jumpForce: 4
@@ -715,7 +748,7 @@ GameObject:
   - component: {fileID: 756361881}
   - component: {fileID: 756361880}
   m_Layer: 0
-  m_Name: RespawnBall
+  m_Name: OutOfBoundRight
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -808,7 +841,7 @@ GameObject:
   - component: {fileID: 830942837}
   - component: {fileID: 830942836}
   m_Layer: 0
-  m_Name: RespawnBall
+  m_Name: OutOfBoundLeft
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -898,7 +931,7 @@ GameObject:
   m_Component:
   - component: {fileID: 874103106}
   m_Layer: 0
-  m_Name: RespawnZone
+  m_Name: OutOfBoundZone
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -919,7 +952,6 @@ Transform:
   - {fileID: 830942835}
   - {fileID: 756361879}
   - {fileID: 2070875361}
-  - {fileID: 582177191}
   m_Father: {fileID: 1376598501}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1053,7 +1085,7 @@ GameObject:
   - component: {fileID: 1357225755}
   - component: {fileID: 1357225754}
   m_Layer: 0
-  m_Name: Respawn
+  m_Name: OutOfBoundDown
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1162,8 +1194,7 @@ Transform:
   m_Children:
   - {fileID: 176121877056783694}
   - {fileID: 874103106}
-  - {fileID: 1548345155}
-  - {fileID: 1936945094}
+  - {fileID: 429864887}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1191,11 +1222,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548345154}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 60.522068, y: 128.04048, z: 141.25671}
+  m_LocalPosition: {x: -28.2, y: 29.5, z: -1.1929932}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1376598501}
-  m_RootOrder: 2
+  m_Father: {fileID: 429864887}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1936945093
 GameObject:
@@ -1221,11 +1252,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936945093}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 99.32207, y: 128.04048, z: 141.25671}
+  m_LocalPosition: {x: 10.599998, y: 29.5, z: -1.1929932}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1376598501}
-  m_RootOrder: 3
+  m_Father: {fileID: 429864887}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2017845082
 GameObject:
@@ -1270,6 +1301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04bb17add15da064eac3ef6855ff9778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players:
+  - {fileID: 438108139}
+  - {fileID: 688803566}
 --- !u!1 &2070875360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,7 +1317,7 @@ GameObject:
   - component: {fileID: 2070875363}
   - component: {fileID: 2070875362}
   m_Layer: 0
-  m_Name: Respawn (1)
+  m_Name: OutOfBoundUp
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

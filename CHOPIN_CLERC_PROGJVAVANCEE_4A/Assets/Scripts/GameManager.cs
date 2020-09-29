@@ -5,20 +5,39 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private List<PlayerController> players = new List<PlayerController>();
+
     private void Awake()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        StartCoroutine(LoadScene(2));
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator LoadScene(int id)
     {
-        
+        float chrono = 0;
+
+        while (chrono <= 0.25f)
+        {
+            chrono += Time.deltaTime;
+            yield return null;
+        }
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(id, LoadSceneMode.Additive);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        StartGame();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void StartGame()
     {
-        
+        foreach(PlayerController player in players)
+        {
+            player.InitializeUI();
+        }
     }
 }

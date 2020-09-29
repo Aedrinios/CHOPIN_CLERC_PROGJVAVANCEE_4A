@@ -16,16 +16,15 @@ public class BallControllerScript : MonoBehaviour
 
     private Vector3 direction = Vector3.forward;
     private float initSpeed;
-    private static BallControllerScript speedController;
-
+    private static BallControllerScript instance;
     public static BallControllerScript Instance()
     {
-        return speedController;
+        return instance;
     }
 
     private void Start()
     {
-        speedController = this;
+        instance = this;
         float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f); 
         float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
         direction = new Vector3(xDirection,yDirection,0.0f);
@@ -47,19 +46,20 @@ public class BallControllerScript : MonoBehaviour
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
-            float normalCollisionX = collision.GetContact(0).normal.x;
+             direction = Vector3.Reflect(direction, collision.GetContact(0).normal);
+       /*     float normalCollisionX = collision.GetContact(0).normal.x;
             float normalCollisionY = Mathf.Sign(collision.GetContact(0).normal.y);
             if (normalCollisionX != 0)
                 direction.x = -direction.x;  
             if (normalCollisionY != 0)
-                direction.y = -direction.y;
+                direction.y = -direction.y;*/
          
             speed++;
         }
 
     }
 
-    public void resetSpeed()
+    public void ResetSpeed()
     {
         speed = initSpeed;
 
