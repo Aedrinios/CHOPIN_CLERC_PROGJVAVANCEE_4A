@@ -15,6 +15,12 @@ public class BallControllerScript : MonoBehaviour
     private LayerMask wallMask;
 
     private Vector3 direction = Vector3.forward;
+    public Vector3 Direction
+    {
+        get { return direction; }
+        set { direction = value; }
+    }
+
     private float initSpeed;
     private static BallControllerScript instance;
     public static BallControllerScript Instance()
@@ -40,7 +46,8 @@ public class BallControllerScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(2.0f, direction);
+
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(2.0f, this);
         
 
 

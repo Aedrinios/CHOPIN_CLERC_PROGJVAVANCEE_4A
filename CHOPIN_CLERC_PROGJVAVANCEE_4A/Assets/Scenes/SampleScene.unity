@@ -334,6 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAxisInput: Horizontal
   jumpInput: JumpP1
+  attackInput: Fire1
   name: "Jean Castex, Roi des Fran\xE7ais"
   playerIndex: Player1
   playerSpeed: 9
@@ -342,6 +343,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 512
+  currentAttackOffsetTimer: 10
 --- !u!114 &438108140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementAxisInput: HorizontalP2
   jumpInput: JumpP2
+  attackInput: Fire2
   name: Patrick Balkany, Roi des Roublards
   playerIndex: Player2
   playerSpeed: 9
@@ -522,6 +525,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 512
+  currentAttackOffsetTimer: 10
 --- !u!114 &688803567
 MonoBehaviour:
   m_ObjectHideFlags: 0
