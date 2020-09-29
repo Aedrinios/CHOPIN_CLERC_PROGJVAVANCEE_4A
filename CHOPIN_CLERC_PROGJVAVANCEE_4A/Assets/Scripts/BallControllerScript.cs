@@ -33,8 +33,11 @@ public class BallControllerScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(2.0f, direction);
+        //direction = new Vector3(direction.x, direction.y, 0.0f);
 
-        
+
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
             float normalCollisionX = collision.GetContact(0).normal.x;
@@ -47,8 +50,6 @@ public class BallControllerScript : MonoBehaviour
             speed++;
         }
 
-        else if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            direction = new Vector3(direction.x, direction.y, 0.0f);
     }
 
     public void resetSpeed()
