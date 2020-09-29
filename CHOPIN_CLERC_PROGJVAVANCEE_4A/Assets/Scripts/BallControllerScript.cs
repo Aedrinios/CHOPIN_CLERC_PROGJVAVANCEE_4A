@@ -35,8 +35,13 @@ public class BallControllerScript : MonoBehaviour
         
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
-            
-            direction = new Vector3(direction.x, -direction.y, 0.0f);
+            float normalCollisionX = collision.GetContact(0).normal.x;
+            float normalCollisionY = Mathf.Sign(collision.GetContact(0).normal.y);
+            if (normalCollisionX != 0)
+                direction.x = -direction.x;  
+            if (normalCollisionY != 0)
+                direction.y = -direction.y;
+         //   direction = new Vector3(direction.x * Mathf.Sign(normalCollisionX), direction.y * Mathf.Sign(normalCollisionY), 0.0f);
             speed++;
         }
 
