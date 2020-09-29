@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage, Vector3 damageDirection)
     {
         currentDamagePercentage += damage;
-        impactVelocity += currentDamagePercentage * damageDirection.normalized;
+        impactVelocity += currentDamagePercentage * damageDirection.normalized * 30;
     }
 
     private void OnCollisionEnter(Collision collision)
