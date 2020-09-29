@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Parameters")]
     [SerializeField]
+    private string name;    
+    [SerializeField]
+    private string playerIndex;
+    [SerializeField]
     private float playerSpeed = 9.0f; // Vitesse du Player
     [SerializeField]
     private float jumpForce = 4.0f; // Puissance de saut
@@ -26,12 +30,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
     private bool groundedPlayer;
-    private float healthRemaining = 2;
+
+    private float healthRemaining = 5;
+
+    private GameObject playerUI;
 
     private float currentDamagePercentage;
 
     private void Start()
     {
+        playerUI = GameObject.Find(playerIndex + "UI");
+        playerUI.transform.Find(playerIndex + "Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
+        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
         controller = gameObject.GetComponent<CharacterController>();
     }
 
@@ -68,7 +78,8 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage, Vector3 damageDirection)
     {
         currentDamagePercentage += damage;
-        impactVelocity += currentDamagePercentage * damageDirection.normalized * 30;
+        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
+        impactVelocity += currentDamagePercentage * damageDirection.normalized * 10;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -84,11 +95,12 @@ public class PlayerController : MonoBehaviour
         if (healthRemaining >= 1)
         {
             healthRemaining--;
+            currentDamagePercentage = 0;
          }
         if(healthRemaining == 0)
         {
             this.gameObject.SetActive(false);
-            Debug.Log(this.name + "Has lost !");
+            Debug.Log(this.name + " Has lost !");
         }
     }
 }

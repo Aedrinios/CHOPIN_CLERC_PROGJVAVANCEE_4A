@@ -41,7 +41,7 @@ public class BallControllerScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(2.0f, direction);
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(speed, direction);
         
 
 
