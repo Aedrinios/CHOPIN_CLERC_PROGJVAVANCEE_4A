@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Parameters")]
     [SerializeField]
+    private string name;    
+    [SerializeField]
+    private string playerIndex;
+    [SerializeField]
     private float playerSpeed = 9.0f; // Vitesse du Player
     [SerializeField]
     private float jumpForce = 4.0f; // Puissance de saut
@@ -26,11 +30,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
     private bool groundedPlayer;
-
+    private GameObject playerUI;
     private float currentDamagePercentage;
 
     private void Start()
     {
+        playerUI = GameObject.Find(playerIndex + "UI");
+        playerUI.transform.Find(playerIndex + "Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
+        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
         controller = gameObject.GetComponent<CharacterController>();
     }
 
@@ -67,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage, Vector3 damageDirection)
     {
         currentDamagePercentage += damage;
+        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
         impactVelocity += currentDamagePercentage * damageDirection.normalized * 30;
     }
 
