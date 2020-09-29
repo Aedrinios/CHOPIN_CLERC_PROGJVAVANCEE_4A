@@ -121,15 +121,16 @@ public class PlayerController : MonoBehaviour
             playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
             impactVelocity += currentDamagePercentage * ball.Direction.normalized * 30;
         }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (!controller.isGrounded)
         {
             playerVelocity.y -= gravityValue * Time.deltaTime;
-
         }
     }
+
     public void lostOneLife()
     {
         if (healthRemaining >= 1)

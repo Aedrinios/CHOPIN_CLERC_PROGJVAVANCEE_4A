@@ -14,7 +14,7 @@ public class RespawnBallScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Respawn"))
         {
-            BallControllerScript.Instance().resetSpeed();
+            BallControllerScript.Instance().ResetSpeed();
             this.transform.position = ZoneStart.position;
             
         }
