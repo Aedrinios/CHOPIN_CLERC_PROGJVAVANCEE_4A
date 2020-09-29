@@ -35,10 +35,15 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        controller = gameObject.GetComponent<CharacterController>();
+    }
+
+    public void InitializeUI()
+    {
         playerUI = GameObject.Find(playerIndex + "UI");
         playerUI.transform.Find(playerIndex + "Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
         playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
-        controller = gameObject.GetComponent<CharacterController>();
+
     }
 
     void Update()
