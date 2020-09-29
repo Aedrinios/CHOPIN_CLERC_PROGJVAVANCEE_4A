@@ -20,9 +20,7 @@ public class RespawnScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Respawn"))
         {
-
-
-            //this.GetComponent<CharacterController>().transform.position = ZoneStart.position;
+            this.gameObject.GetComponent<PlayerController>().lostOneLife();
             cc.enabled = false;
             this.transform.position = ZoneStart.position;
             cc.enabled = true;

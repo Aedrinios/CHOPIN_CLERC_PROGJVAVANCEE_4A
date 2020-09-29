@@ -33,7 +33,12 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
+    private bool groundedPlayer;
+
+    private float healthRemaining = 5;
+
     private GameObject playerUI;
+
     private float currentDamagePercentage;
     private bool isBallCaught;
     private float currentAttackOffsetTimer;
@@ -116,7 +121,6 @@ public class PlayerController : MonoBehaviour
             playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
             impactVelocity += currentDamagePercentage * ball.Direction.normalized * 30;
         }
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -124,6 +128,19 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y -= gravityValue * Time.deltaTime;
 
+        }
+    }
+    public void lostOneLife()
+    {
+        if (healthRemaining >= 1)
+        {
+            healthRemaining--;
+            currentDamagePercentage = 0;
+         }
+        if(healthRemaining == 0)
+        {
+            this.gameObject.SetActive(false);
+            Debug.Log(this.name + " Has lost !");
         }
     }
 }

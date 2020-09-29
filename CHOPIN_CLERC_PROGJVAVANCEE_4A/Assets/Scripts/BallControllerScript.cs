@@ -46,21 +46,11 @@ public class BallControllerScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(2.0f, this);
-        
-
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(speed, this);
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
-             direction = Vector3.Reflect(direction, collision.GetContact(0).normal);
-       /*     float normalCollisionX = collision.GetContact(0).normal.x;
-            float normalCollisionY = Mathf.Sign(collision.GetContact(0).normal.y);
-            if (normalCollisionX != 0)
-                direction.x = -direction.x;  
-            if (normalCollisionY != 0)
-                direction.y = -direction.y;*/
-         
+            direction = Vector3.Reflect(direction, collision.GetContact(0).normal);
             speed++;
         }
 
