@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
     private bool groundedPlayer;
+    private float healthRemaining = 2;
 
     private float currentDamagePercentage;
 
@@ -76,6 +77,18 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y -= gravityValue * Time.deltaTime;
 
+        }
+    }
+    public void lostOneLife()
+    {
+        if (healthRemaining >= 1)
+        {
+            healthRemaining--;
+         }
+        if(healthRemaining == 0)
+        {
+            this.gameObject.SetActive(false);
+            Debug.Log(this.name + "Has lost !");
         }
     }
 }

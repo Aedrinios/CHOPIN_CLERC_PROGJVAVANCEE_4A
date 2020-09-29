@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40f23b754992914f9a35e2a4fa5bea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZoneStart: {fileID: 0}
+  ZoneStart: {fileID: 582177191}
 --- !u!1 &438108138
 GameObject:
   m_ObjectHideFlags: 0
