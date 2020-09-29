@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController controller;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
+    [Header("Player Inputs")]
+    [SerializeField]
+    private string movementAxisInput;
+    [SerializeField]
+    private string jumpInput;
+
+    [Space(10)]
+
+    [Header("Player Parameters")]
     [SerializeField]
     private float playerSpeed = 9.0f; // Vitesse du Player
     [SerializeField]
-    private float jumpHeight = 4.0f; // Puissance de saut
+    private float jumpForce = 4.0f; // Puissance de saut
     [SerializeField]
     private float gravityValue = -9.81f;
-    public LayerMask groundMask;
-    public string axis;
-    public string Button_jump;
+    [SerializeField]
+    private LayerMask groundMask;
 
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private Vector3 impactVelocity;
+    private bool groundedPlayer;
+
+    private float currentDamagePercentage;
 
     private void Start()
     {
@@ -32,18 +43,31 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
         // Mouvement Horizontal du Player
-        Vector3 move = new Vector3(Input.GetAxis(axis), 0, 0);
+        Vector3 move = new Vector3(Input.GetAxis(movementAxisInput), 0, 0);
         controller.Move(move * Time.deltaTime * playerSpeed); 
 
 
         // Application de la valeur pour le jump
-        if (Input.GetButton(Button_jump) && groundedPlayer)
+        if (Input.GetButton(jumpInput) && groundedPlayer)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue); 
+            playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue); 
         }
         // Jump du Player
         playerVelocity.y += gravityValue * Time.deltaTime;
+        if (impactVelocity.magnitude > 0.2)
+        {
+            playerVelocity = impactVelocity;
+        }
+
+        impactVelocity = Vector3.Lerp(impactVelocity, Vector3.zero, 5 * Time.deltaTime);
         controller.Move(playerVelocity * Time.deltaTime); 
+    }
+
+
+    public void TakeDamage(float damage, Vector3 damageDirection)
+    {
+        currentDamagePercentage += damage;
+        impactVelocity += currentDamagePercentage * damageDirection.normalized;
     }
 
     private void OnCollisionEnter(Collision collision)
