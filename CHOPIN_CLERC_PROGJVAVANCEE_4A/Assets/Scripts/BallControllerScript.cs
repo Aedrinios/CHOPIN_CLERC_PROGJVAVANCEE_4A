@@ -15,12 +15,14 @@ public class BallControllerScript : MonoBehaviour
     private LayerMask wallMask;
 
     private Vector3 direction = Vector3.forward;
+    private float initSpeed;
 
     private void Start()
     {
         float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f); 
         float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
         direction = new Vector3(xDirection,yDirection,0.0f);
+        initSpeed = speed;
     }
 
     // Update is called once per frame
@@ -47,5 +49,11 @@ public class BallControllerScript : MonoBehaviour
 
         else if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
             direction = new Vector3(direction.x, direction.y, 0.0f);
+    }
+
+    public void resetSpeed()
+    {
+        speed = initSpeed;
+
     }
 }
