@@ -20,7 +20,7 @@ public class RespawnScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Respawn"))
         {
-            this.gameObject.GetComponent<PlayerController>().lostOneLife();
+            this.gameObject.GetComponent<PlayerController>().lostOneLife(); // Perte de vie du joueur + respawn au point de respawn
             cc.enabled = false;
             this.transform.position = ZoneStart.position;
             cc.enabled = true;

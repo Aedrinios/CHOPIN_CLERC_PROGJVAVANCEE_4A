@@ -64,5 +64,6 @@ public class BallControllerScript : MonoBehaviour
     public void getReflected()
     {
         direction = -direction;
+        speed = speed * 2;
     }
 }

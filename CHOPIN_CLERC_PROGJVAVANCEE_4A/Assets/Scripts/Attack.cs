@@ -25,6 +25,7 @@ public class Attack : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
+            //Permet de reflect la ball quand elle est proche du joueur
             if (Input.GetButtonDown("Grab"))
             {
                 BallControllerScript.Instance().getReflected() ;
