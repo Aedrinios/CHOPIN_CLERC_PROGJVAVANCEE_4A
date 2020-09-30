@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity = impactVelocity;
         }
 
-        if (Input.GetButtonDown(attackInput))
+        if (Input.GetButtonDown("Grab"))
         {
             isBallCaught = true;
         }
@@ -108,18 +108,18 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage, BallControllerScript ball)
     {
-        Debug.Log("OH");
+        /*Debug.Log("OH");
         if (isBallCaught)
         {
             Debug.Log("AH?");
             ball.Direction = new Vector3(xInput, yInput, 0);
         }
-        else
-        {
+        else*/
+       if(!isBallCaught) {
             Debug.Log("NO");
             currentDamagePercentage += damage;
             playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
-            impactVelocity += currentDamagePercentage * ball.Direction.normalized * 30;
+            impactVelocity += currentDamagePercentage * ball.Direction.normalized * 10;
         }
     }
 
