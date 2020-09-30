@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "Player", order = 0)]
-public class PlayerData : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerDataObject", menuName = "Player", order = 0)]
+public class PlayerDataObject : ScriptableObject
 {
     public string horizontalAxis, verticalAxis;
 

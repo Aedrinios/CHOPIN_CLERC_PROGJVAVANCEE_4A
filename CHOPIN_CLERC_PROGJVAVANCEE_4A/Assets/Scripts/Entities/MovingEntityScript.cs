@@ -13,6 +13,7 @@ public abstract class MovingEntityScript : MonoBehaviour
 
     [SerializeField]
     protected float speed;
+    public float Speed { get { return speed; } }
 
     public abstract void Move();
     public abstract void Freeze();

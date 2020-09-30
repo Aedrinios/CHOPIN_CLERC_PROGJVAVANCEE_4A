@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7248454222007737682}
   - component: {fileID: 7248454222007737644}
+  - component: {fileID: -8454817194158908572}
+  - component: {fileID: 19192488508211455}
   - component: {fileID: 7248454222007737683}
-  - component: {fileID: 3832219897354347436}
+  - component: {fileID: -1374797852793456007}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -53,6 +55,30 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-8454817194158908572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7248454222007737681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a2581e203856546bb0ce50b4f22156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &19192488508211455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7248454222007737681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bc0a7fffb30b0e419db9c5156227219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7248454222007737683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,17 +91,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574206b81912b0c428c352aab08e5c53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
-  playerIndex: 
-  playerSpeed: 30
+  speed: 15
   jumpForce: 15
   gravityValue: -20
   groundMask:
     serializedVersion: 2
     m_Bits: 512
-  attackOffsetTimer: 0.2
-  healthRemaining: 2
---- !u!114 &3832219897354347436
+  onGround: 0
+--- !u!114 &-1374797852793456007
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,9 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7248454222007737681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e88d40f1f39ef4478a4b87c955ff27b, type: 3}
+  m_Script: {fileID: 11500000, guid: 14b8bf64c4a156a46a1a7a6637f6fd53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeRemaining: 5
 --- !u!1 &7248454222289594653
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,9 +200,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7248454223890494832}
   - component: {fileID: 7248454223890494833}
-  - component: {fileID: 7248454223890494834}
+  - component: {fileID: 8003406605308520202}
   m_Layer: 8
-  m_Name: AttackRangeZone
+  m_Name: PlayerAttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +236,7 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7248454223890494834
+--- !u!114 &8003406605308520202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,6 +245,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7248454223890494839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 780bc55d9e23898438549cbd55ee5ade, type: 3}
+  m_Script: {fileID: 11500000, guid: 42fbc6af51e85fa4f8b33ff920c00666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackOffsetTimer: 0.2

@@ -51,8 +51,7 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < playerCount; i++)
         {
             GameObject newPlayer = Instantiate(gameData.PlayerPrefab, spawnPositionList[i].position, Quaternion.identity, gameplayTransform);
-            newPlayer.GetComponent<PlayerControllerScript>().InitializePlayer(gameData.Inputs[i], "Player" + (i + 1), "Player" + (i + 1)    );
-            newPlayer.GetComponent<DeadZone>().ZoneStart = spawnPositionList[i];
+            newPlayer.GetComponent<PlayerDataScript>().SetPlayerInput(gameData.Inputs[i], spawnPositionList[i].position,  "Player" + (i + 1), (i + 1));
             newPlayer.transform.GetChild(0).GetComponent<MeshRenderer>().material = gameData.Inputs[i].playerMaterial;
             players.Add(newPlayer);
         }
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour
         Transform victoryScreen = GameObject.Find("VictoryPanel").transform;
         victoryScreen.GetChild(0).gameObject.SetActive(true);
         victoryScreen.GetChild(1).gameObject.SetActive(true);
-        victoryScreen.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = players[0].GetComponent<PlayerControllerScript>().PlayerName + " wins !";
+        victoryScreen.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = players[0].GetComponent<PlayerDataScript>().PlayerName + " wins !";
         
         
     }

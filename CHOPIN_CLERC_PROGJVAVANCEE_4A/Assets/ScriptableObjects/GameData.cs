@@ -15,8 +15,8 @@ public class GameData : ScriptableObject
     [Space(10)]
 
     [SerializeField]
-    private List<PlayerData> inputs = new List<PlayerData>();
-    public List<PlayerData> Inputs
+    private List<PlayerDataObject> inputs = new List<PlayerDataObject>();
+    public List<PlayerDataObject> Inputs
     {
         get { return inputs; }
     }

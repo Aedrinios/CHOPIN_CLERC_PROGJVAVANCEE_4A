@@ -30,7 +30,7 @@ public class BallControllerScript : MovingEntityScript
     private void OnCollisionEnter(Collision collision)
     {
         if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            collision.gameObject.GetComponent<PlayerControllerScript>().TakeDamage(speed, this);
+            collision.gameObject.GetComponent<PlayerLifeSystem>().RaiseOnPlayerDamageEvent(this);
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
