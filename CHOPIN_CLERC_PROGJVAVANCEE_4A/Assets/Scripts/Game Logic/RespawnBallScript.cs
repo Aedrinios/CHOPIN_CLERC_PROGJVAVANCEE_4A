@@ -3,28 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RespawnScript : MonoBehaviour
+public class RespawnBallScript : MonoBehaviour
 {
     [SerializeField]
     private Transform ZoneStart;
-    private CharacterController cc;
-
-    public void Start()
-    {
-        cc = this.GetComponent<CharacterController>();
-    }
-
+    
 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Respawn"))
         {
-            this.gameObject.GetComponent<PlayerController>().lostOneLife();
-            cc.enabled = false;
+            BallControllerScript.Instance.ResetBallSpeed();
             this.transform.position = ZoneStart.position;
-            cc.enabled = true;
-
+            
         }
     }
 }

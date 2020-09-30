@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private List<PlayerController> players = new List<PlayerController>();
+    private List<PlayerControllerScript> players = new List<PlayerControllerScript>();
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        foreach(PlayerController player in players)
+        foreach(PlayerControllerScript player in players)
         {
             player.InitializeUI();
         }
