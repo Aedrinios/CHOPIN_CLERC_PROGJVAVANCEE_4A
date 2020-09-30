@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RespawnScript : MonoBehaviour
+public class DeadZone : MonoBehaviour
 {
     [SerializeField]
     private Transform zoneStart;
@@ -16,14 +16,14 @@ public class RespawnScript : MonoBehaviour
 
     public void Start()
     {
-        cc = this.GetComponent<CharacterController>();
+        cc = GetComponent<CharacterController>();
     }
 
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Respawn"))
+        if (collision.gameObject.CompareTag("Respawn"))
         {
             gameObject.GetComponent<PlayerControllerScript>().LoseOneLife();
             cc.enabled = false;

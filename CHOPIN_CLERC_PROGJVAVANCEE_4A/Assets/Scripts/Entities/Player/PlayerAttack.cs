@@ -25,7 +25,6 @@ public class PlayerAttack : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            Debug.Log("Enter");
             ballToHit = other.gameObject.GetComponent<BallControllerScript>();
         }
     }

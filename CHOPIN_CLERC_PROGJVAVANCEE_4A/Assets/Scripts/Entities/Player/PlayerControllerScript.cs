@@ -1,22 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControllerScript : MonoBehaviour
 {
-    [Header("Player Inputs")]
-    [SerializeField]
-    private string movementAxisInput;
-    [SerializeField]
-    private string jumpInput;
-    [SerializeField]
-    private string attackInput;
+    private PlayerData playerInput;
+    public PlayerData PlayerInput
+    {
+        set { playerInput = value; }
+    }
 
     [Space(10)]
 
     [Header("Player Parameters")]
     [SerializeField]
-    private string name;    
+    private string playerName;   
+    public string PlayerName { get { return playerName; } }
     [SerializeField]
     private string playerIndex;
     [SerializeField]
@@ -30,11 +30,13 @@ public class PlayerControllerScript : MonoBehaviour
     [SerializeField]
     private float attackOffsetTimer;
 
+    private TMPro.TextMeshProUGUI playerUIDamage;
+
+
     private CharacterController controller;
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
-    private bool groundedPlayer;
-
+    [SerializeField]
     private float healthRemaining = 5;
 
     private GameObject playerUI;
@@ -50,18 +52,22 @@ public class PlayerControllerScript : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
     }
 
-    public void InitializeUI()
+    public void InitializePlayer(PlayerData input, string name, string index)
     {
+        playerInput = input;
+        playerName = name;
+        playerIndex = index;
         currentAttackOffsetTimer = attackOffsetTimer;
         playerUI = GameObject.Find(playerIndex + "UI");
-        playerUI.transform.Find(playerIndex + "Name").GetComponent<TMPro.TextMeshProUGUI>().text = name;
-        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
+        playerUI.transform.Find(playerIndex + "Name").GetComponent<TMPro.TextMeshProUGUI>().text = playerName;
+        playerUIDamage = playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>();
+        playerUIDamage.text = currentDamagePercentage + "%";
 
     }
 
     void Update()
     {
-       /* if (isBallCaught)
+        if (isBallCaught)
         {
             currentAttackOffsetTimer -= Time.deltaTime;
             if(currentAttackOffsetTimer <= 0)
@@ -69,7 +75,7 @@ public class PlayerControllerScript : MonoBehaviour
                 isBallCaught = false;
                 currentAttackOffsetTimer = attackOffsetTimer;
             }
-        }*/
+        }
 
         // Test si le Player est au sol
         onGround = controller.isGrounded;
@@ -78,14 +84,17 @@ public class PlayerControllerScript : MonoBehaviour
             playerVelocity.y = 0f;
         }
         // Mouvement Horizontal du Player
-        xInput = Input.GetAxis(movementAxisInput);
-       // yInput = Input.GetAxis("Vertical");
+
+
+
+        xInput = Input.GetAxis(playerInput.horizontalAxis);
+        yInput = Input.GetAxis(playerInput.verticalAxis);
         Vector3 move = new Vector3(xInput, 0, 0);
         controller.Move(move * Time.deltaTime * playerSpeed); 
 
 
         // Application de la valeur pour le jump
-        if (Input.GetButton(jumpInput) && onGround)
+        if (Input.GetKeyDown(playerInput.jumpInput) && onGround)
         {
             playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue); 
         }
@@ -96,10 +105,10 @@ public class PlayerControllerScript : MonoBehaviour
             playerVelocity = impactVelocity;
         }
 
-     /*   if (Input.GetButtonDown("Grab"))
+        if (Input.GetKeyDown(playerInput.hitBallInput))
         {
             isBallCaught = true;
-        }*/
+        }
 
         impactVelocity = Vector3.Lerp(impactVelocity, Vector3.zero, 5 * Time.deltaTime);
         controller.Move(playerVelocity * Time.deltaTime); 
@@ -108,16 +117,13 @@ public class PlayerControllerScript : MonoBehaviour
 
     public void TakeDamage(float damage, BallControllerScript ball)
     {
-        /*Debug.Log("OH");
-        if (isBallCaught)
+        
+        if (!isBallCaught)
         {
-            Debug.Log("AH?");
-            ball.Direction = new Vector3(xInput, yInput, 0);
+            currentDamagePercentage += damage;
+            playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
+            impactVelocity += currentDamagePercentage * ball.Direction.normalized * 10;
         }
-        else*/
-        currentDamagePercentage += damage;
-        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
-        impactVelocity += currentDamagePercentage * ball.Direction.normalized * 10;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -134,11 +140,16 @@ public class PlayerControllerScript : MonoBehaviour
         {
             healthRemaining--;
             currentDamagePercentage = 0;
-         }
-        if(healthRemaining == 0)
+            playerUIDamage.text = currentDamagePercentage + "%";
+
+
+        }
+        if (healthRemaining == 0)
         {
+            GameManager.Instance.GameOver(this.gameObject);
             this.gameObject.SetActive(false);
             Debug.Log(this.name + " Has lost !");
+            
         }
     }
 }

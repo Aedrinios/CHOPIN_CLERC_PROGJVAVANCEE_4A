@@ -7,16 +7,17 @@ public class RespawnBallScript : MonoBehaviour
 {
     [SerializeField]
     private Transform ZoneStart;
-    
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Respawn"))
+    /*   if (other.gameObject.CompareTag("Respawn"))
         {
-            BallControllerScript.Instance.ResetBallSpeed();
+            GetComponent<BallControllerScript>().ResetBallSpeed();
             this.transform.position = ZoneStart.position;
             
-        }
+        }*/
+        //if (other.gameObject.CompareTag("Wall"))
+        //    this.transform.position += warpVector ;
     }
 }

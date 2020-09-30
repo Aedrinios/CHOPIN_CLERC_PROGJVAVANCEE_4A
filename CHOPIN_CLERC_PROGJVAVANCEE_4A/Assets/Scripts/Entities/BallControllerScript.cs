@@ -13,17 +13,6 @@ public class BallControllerScript : MovingEntityScript
 
     private float initSpeed;
 
-    private static BallControllerScript instance;
-    public static BallControllerScript Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = FindObjectOfType<BallControllerScript>();
-            return instance;
-        }
-    }
-
     private void Start()
     {
         float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f); 
@@ -59,7 +48,7 @@ public class BallControllerScript : MovingEntityScript
     public void ReflectBallDirection()
     {
         direction = -direction;
-        speed = speed * 2;
+        speed = speed * 1.2f;
     }
 
     public override void Move()
