@@ -3,34 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallControllerScript : MonoBehaviour
+public class BallControllerScript : MovingEntityScript
 {
-    [SerializeField]
-    private float speed;
-    
     [SerializeField]
     private LayerMask playerMask;
 
     [SerializeField]
     private LayerMask wallMask;
 
-    private Vector3 direction = Vector3.forward;
-    public Vector3 Direction
-    {
-        get { return direction; }
-        set { direction = value; }
-    }
-
     private float initSpeed;
+
     private static BallControllerScript instance;
-    public static BallControllerScript Instance()
+    public static BallControllerScript Instance
     {
-        return instance;
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType<BallControllerScript>();
+            return instance;
+        }
     }
 
     private void Start()
     {
-        instance = this;
         float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f); 
         float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
         direction = new Vector3(xDirection,yDirection,0.0f);
@@ -40,13 +35,13 @@ public class BallControllerScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        transform.position += direction.normalized * speed * Time.deltaTime;
+        Move();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(speed, this);
+            collision.gameObject.GetComponent<PlayerControllerScript>().TakeDamage(speed, this);
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
@@ -56,14 +51,24 @@ public class BallControllerScript : MonoBehaviour
 
     }
 
-    public void ResetSpeed()
+    public void ResetBallSpeed()
     {
         speed = initSpeed;
 
     }
-    public void getReflected()
+    public void ReflectBallDirection()
     {
         direction = -direction;
         speed = speed * 2;
+    }
+
+    public override void Move()
+    {
+        transform.position += direction.normalized * speed * Time.deltaTime;
+    }
+
+    public override void Freeze()
+    {
+        throw new NotImplementedException();
     }
 }

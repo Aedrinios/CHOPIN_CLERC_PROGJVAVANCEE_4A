@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerScript : MonoBehaviour
 {
     [Header("Player Inputs")]
     [SerializeField]
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (isBallCaught)
+       /* if (isBallCaught)
         {
             currentAttackOffsetTimer -= Time.deltaTime;
             if(currentAttackOffsetTimer <= 0)
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
                 isBallCaught = false;
                 currentAttackOffsetTimer = attackOffsetTimer;
             }
-        }
+        }*/
 
         // Test si le Player est au sol
         onGround = controller.isGrounded;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
         // Mouvement Horizontal du Player
         xInput = Input.GetAxis(movementAxisInput);
-        yInput = Input.GetAxis("Vertical");
+       // yInput = Input.GetAxis("Vertical");
         Vector3 move = new Vector3(xInput, 0, 0);
         controller.Move(move * Time.deltaTime * playerSpeed); 
 
@@ -96,10 +96,10 @@ public class PlayerController : MonoBehaviour
             playerVelocity = impactVelocity;
         }
 
-        if (Input.GetButtonDown("Grab"))
+     /*   if (Input.GetButtonDown("Grab"))
         {
             isBallCaught = true;
-        }
+        }*/
 
         impactVelocity = Vector3.Lerp(impactVelocity, Vector3.zero, 5 * Time.deltaTime);
         controller.Move(playerVelocity * Time.deltaTime); 
@@ -115,12 +115,9 @@ public class PlayerController : MonoBehaviour
             ball.Direction = new Vector3(xInput, yInput, 0);
         }
         else*/
-       if(!isBallCaught) {
-            Debug.Log("NO");
-            currentDamagePercentage += damage;
-            playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
-            impactVelocity += currentDamagePercentage * ball.Direction.normalized * 10;
-        }
+        currentDamagePercentage += damage;
+        playerUI.transform.Find(playerIndex + "Damage").GetComponent<TMPro.TextMeshProUGUI>().text = currentDamagePercentage + "%";
+        impactVelocity += currentDamagePercentage * ball.Direction.normalized * 10;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -131,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void lostOneLife()
+    public void LoseOneLife()
     {
         if (healthRemaining >= 1)
         {
