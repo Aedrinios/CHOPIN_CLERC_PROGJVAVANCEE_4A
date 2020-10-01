@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject newPlayer = Instantiate(gameData.PlayerPrefab, spawnPositionList[i].position, Quaternion.identity, gameplayTransform);
             newPlayer.GetComponent<PlayerDataScript>().SetPlayerInput(gameData.Inputs[i], spawnPositionList[i].position,  "Player" + (i + 1), (i + 1));
-            newPlayer.transform.GetChild(0).GetComponent<MeshRenderer>().material = gameData.Inputs[i].playerMaterial;
+            //newPlayer.transform.GetChild(0).GetComponent<MeshRenderer>().material = gameData.Inputs[i].playerMaterial;
             players.Add(newPlayer);
         }
     }

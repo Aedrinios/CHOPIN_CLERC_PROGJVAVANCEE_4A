@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad6322ab52d7fe46a0dbd0fb898904d, type: 3}
   m_Name: GameDataClassic
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 7248454222007737681, guid: dd5583ecf0c8c7f4d8bb50cf05146c12,
+  playerPrefab: {fileID: 1817135253558328, guid: 734cc7b3bcf18430e914f983a4108584,
     type: 3}
   inputs:
   - {fileID: 11400000, guid: 1d76fb259f1be66419ddaecf88491103, type: 2}

@@ -91,7 +91,7 @@ public class PlayerControllerScript : MovingEntityScript
     public void KnockbackPlayer(BallControllerScript ballHit)
     {
        
-       rb.AddForce(ballHit.Direction.normalized *5 * ballHit.Speed, (ForceMode.Force)) ;
+       rb.AddForce(ballHit.Direction.normalized *5 * ballHit.Speed, (ForceMode.Impulse)) ;
     }
 
     public void RespawnPlayer()
