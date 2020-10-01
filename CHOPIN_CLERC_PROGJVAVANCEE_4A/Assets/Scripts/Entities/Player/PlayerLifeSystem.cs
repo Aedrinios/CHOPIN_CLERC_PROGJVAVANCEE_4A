@@ -30,19 +30,17 @@ public class PlayerLifeSystem : MonoBehaviour
             onPlayerDie?.Invoke();
 
         }
-        //  GameManager.Instance.GameOver(gameObject);
-
     }
 
     public void TakeDamage(BallControllerScript ballHit)
     {
-        Debug.Log("Order :" + this.name);
         currentDamageReceived += ballHit.Speed;
     }
 
     public void Die()
     {
         gameObject.SetActive(false);
+        GameManager.Instance.GameOver(gameObject);
     }
 
     public void RaiseOnPlayerDamageEvent(BallControllerScript ballHit)

@@ -20,7 +20,6 @@ public class PlayerInterfaceScript : MonoBehaviour
 
     public void RefreshDamageUI(BallControllerScript ballHit)
     {
-        Debug.Log("Order :" + this.name);
         playerDamageText.text = ballHit.Speed + " %";   
     }
 

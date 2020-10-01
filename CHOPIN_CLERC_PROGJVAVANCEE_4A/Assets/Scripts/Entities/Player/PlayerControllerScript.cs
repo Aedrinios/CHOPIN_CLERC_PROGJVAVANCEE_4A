@@ -90,14 +90,12 @@ public class PlayerControllerScript : MovingEntityScript
     }
     public void KnockbackPlayer(BallControllerScript ballHit)
     {
-        
-       rb.AddForce(ballHit.Direction.normalized * ballHit.Speed, (ForceMode.Impulse)) ;
+        rb.AddForce(ballHit.Direction.normalized * ballHit.Speed, ForceMode.Impulse) ;
     }
 
     public void RespawnPlayer()
     {
-        Debug.Log("Order :" + this.name);
-       
+        rb.velocity = Vector3.zero;
         transform.position = playerData.PlayerSpawner;
         
     }

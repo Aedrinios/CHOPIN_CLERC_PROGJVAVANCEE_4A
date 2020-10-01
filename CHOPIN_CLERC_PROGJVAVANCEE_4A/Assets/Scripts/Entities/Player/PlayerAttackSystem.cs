@@ -1,48 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerAttackSystem : MonoBehaviour
 {
     [SerializeField]
-    private float attackOffsetTimer;
-    private float currentAttackOffsetTimer;
+    private float stunTimer;
+    private float currentStunTimer;
 
     private PlayerDataScript playerData;
     private BallControllerScript ballToHit;
-
-    private bool isBallCaught;
+    private bool isStun = false;
 
     private void Start()
     {
         playerData = transform.parent.GetComponent<PlayerDataScript>();
-        currentAttackOffsetTimer = attackOffsetTimer;
+        currentStunTimer = stunTimer;
     }
 
     private void Update()
     {
-        if (isBallCaught)
+
+        if (isStun)
         {
-            currentAttackOffsetTimer -= Time.deltaTime;
-            if (currentAttackOffsetTimer <= 0)
+            currentStunTimer -= Time.deltaTime;
+            if (currentStunTimer <= 0)
             {
-                isBallCaught = false;
-                currentAttackOffsetTimer = attackOffsetTimer;
+                isStun = false;
+                currentStunTimer = stunTimer;
             }
         }
 
         float xInput = Input.GetAxis(playerData.HorizontalAxis);
         float yInput = Input.GetAxis(playerData.VerticalAxis);
-        if (Input.GetKeyDown(playerData.HitBallInput) && ballToHit != null)
+        if (Input.GetKeyDown(playerData.HitBallInput) && ballToHit != null && !isStun)
             HitBall(xInput, yInput);
     }
 
     private void HitBall(float x, float y)
     {
-
-        isBallCaught = true;
         ballToHit.ReflectBallDirection(x, y);
     }
+
+    public void StunAttack(BallControllerScript ball)
+    {
+        isStun = true;
+    }
+
+    private void OnEnable()
+    {
+        transform.parent.GetComponent<PlayerLifeSystem>().onPlayerTakeDamage += StunAttack;
+    }
+    private void OnDisable()
+    {
+        transform.parent.GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= StunAttack;
+    }
+
 
     public void OnTriggerEnter(Collider other)
     {

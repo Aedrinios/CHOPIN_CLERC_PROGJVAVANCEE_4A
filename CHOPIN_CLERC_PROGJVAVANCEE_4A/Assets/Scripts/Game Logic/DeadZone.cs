@@ -7,7 +7,6 @@ public class DeadZone : MonoBehaviour
 {
     private void OnCollisionEnter(Collision hit)
     {
-        Debug.Log("Controller hit : " + hit.gameObject.name);
         //   if ((playerMask.value & (1 << hit.gameObject.layer)) > 0)
         if (hit.collider.CompareTag("Respawn"))
             GetComponent<PlayerLifeSystem>().onPlayerLoseLife?.Invoke();
