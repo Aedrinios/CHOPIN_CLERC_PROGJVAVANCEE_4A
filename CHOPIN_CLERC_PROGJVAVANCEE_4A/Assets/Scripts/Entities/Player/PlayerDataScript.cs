@@ -22,7 +22,14 @@ public class PlayerDataScript : MonoBehaviour
     public KeyCode JumpInput { get { return jumpInput; } }
     public KeyCode HitBallInput { get { return hitBallInput; } }
 
-    public void SetPlayerInput(PlayerDataObject data, Vector3 spawner, string name, int index)
+    private bool isControlledByPlayer;
+    public bool IsControlledByPlayer
+    {
+        get { return isControlledByPlayer; }
+    }
+
+
+    public void SetPlayerData(PlayerDataObject data, Vector3 spawner, string name, int index)
     {
         playerName = name;
         playerIndex = index;
@@ -31,5 +38,6 @@ public class PlayerDataScript : MonoBehaviour
         verticalAxis = data.verticalAxis;
         jumpInput = data.jumpInput;
         hitBallInput = data.hitBallInput;
+        isControlledByPlayer = data.isPlayer;
     }
 }

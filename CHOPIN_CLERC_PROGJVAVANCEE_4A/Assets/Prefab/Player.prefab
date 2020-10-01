@@ -34,8 +34,8 @@ Transform:
   m_LocalPosition: {x: -23.8, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
-  - {fileID: 7248454222289594654}
   - {fileID: 7248454223890494832}
+  - {fileID: 7248454222289594654}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,12 +76,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
+  IsControlledByPlayer: 0
+  timeBeforeRandomInput: 3
   jumpForce: 15
   gravityValue: 40
   groundMask:
     serializedVersion: 2
     m_Bits: 512
-  stopJump: 0
 --- !u!114 &-1374797852793456007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +168,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7248454222007737682}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7248454222289594649
 MeshFilter:
@@ -246,7 +247,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7248454222007737682}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &7248454223890494833
 CapsuleCollider:
@@ -274,4 +275,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42fbc6af51e85fa4f8b33ff920c00666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackOffsetTimer: 0.2
+  stunTimer: 0.1
