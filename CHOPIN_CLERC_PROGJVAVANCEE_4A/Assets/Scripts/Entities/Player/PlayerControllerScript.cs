@@ -11,21 +11,34 @@ public class PlayerControllerScript : MovingEntityScript
     [SerializeField]
     private float jumpForce; // Puissance de saut
     [SerializeField]
-    private float gravityValue;
+    private float gravityValue  = 20.0f;
     [SerializeField]
     private LayerMask groundMask;
 
-    private CharacterController controller;
+    //private CharacterController controller;
+    private Rigidbody rb;
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
-
+    [SerializeField]
+    
+    private bool stopJump;
     private bool onGround;
     private float xInput, yInput;
+    //
+   
+    
+    float maxVelocityChange = 10.0f;
+    
+    float jumpHeight = 20.0f;
+    
+    //
 
     private void Start()
     {
+        onGround = true;
         playerData = GetComponent<PlayerDataScript>();
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+       // controller = GetComponent<CharacterController>();
     }
 
     void FixedUpdate()
@@ -34,36 +47,42 @@ public class PlayerControllerScript : MovingEntityScript
     }
 
     public override void Move()
-    {
-        // Test si le Player est au sol
-        onGround = controller.isGrounded;
-        if (onGround && playerVelocity.y < 0)
+    {////////////////////////////////////////
+        
+            // Calculate how fast we should be moving
+            var targetVelocity = new Vector3(Input.GetAxis(playerData.HorizontalAxis), 0, 0);
+            targetVelocity = transform.TransformDirection(targetVelocity);
+            targetVelocity *= speed;
+
+            // Apply a force that attempts to reach our target velocity
+            var velocity = rb.velocity;
+            var velocityChange = (targetVelocity - velocity);
+            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+            velocityChange.y = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+
+            rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        if (onGround)
         {
-            playerVelocity.y = 0f;
+            // Jump
+            if (Input.GetKeyDown(playerData.JumpInput))
+            {
+                rb.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
+            }
         }
+        onGround = false;
 
-        // Mouvement Horizontal du Player
-        xInput = Input.GetAxis(playerData.HorizontalAxis);
-        yInput = Input.GetAxis(playerData.VerticalAxis);
-        Vector3 move = new Vector3(xInput, 0, 0);
-        controller.Move(move * Time.deltaTime * speed);
+        // We apply gravity manually for more tuning control
+        rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));
 
-        // Application de la valeur pour le jump
-        if (Input.GetKeyDown(playerData.JumpInput) && onGround)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
-        }
-
-        if (impactVelocity.magnitude > 0.2)
-        {
-            playerVelocity = impactVelocity;
-        }
-        impactVelocity = Vector3.Lerp(impactVelocity, Vector3.zero, 5 * Time.deltaTime);
-
-        // Jump du Player
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
     }
+
+    void OnCollisionStay(Collision collision)
+    {
+
+        if(collision.transform.tag == "Floor")
+            onGround = true;
+    }
+
 
     public override void Freeze()
     {
@@ -71,24 +90,18 @@ public class PlayerControllerScript : MovingEntityScript
     }
     public void KnockbackPlayer(BallControllerScript ballHit)
     {
-        impactVelocity += ballHit.Speed * ballHit.Direction.normalized * 10;
+        
+       rb.AddForce(ballHit.Direction.normalized * ballHit.Speed, (ForceMode.Impulse)) ;
     }
 
     public void RespawnPlayer()
     {
         Debug.Log("Order :" + this.name);
-        controller.enabled = false;
+       
         transform.position = playerData.PlayerSpawner;
-        controller.enabled = true;
+        
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!controller.isGrounded)
-        {
-            playerVelocity.y -= gravityValue * Time.deltaTime;
-        }
-    }
+    
 
     private void OnEnable()
     {
@@ -100,4 +113,13 @@ public class PlayerControllerScript : MovingEntityScript
         GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= KnockbackPlayer;
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife -= RespawnPlayer;
     }
+    float CalculateJumpVerticalSpeed()
+    {
+        // From the jump height and gravity we deduce the upwards speed 
+        // for the character to reach at the apex.
+        return Mathf.Sqrt(2 * jumpHeight * gravityValue);
+    }
+    
+
+
 }

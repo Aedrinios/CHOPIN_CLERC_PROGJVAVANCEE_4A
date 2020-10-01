@@ -34,7 +34,7 @@ public class BallControllerScript : MovingEntityScript
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
-            direction = Vector3.Reflect(direction, collision.GetContact(0).normal);
+             direction = Vector3.Reflect(direction , collision.GetContact(0).normal);
             speed++;
         }
 
