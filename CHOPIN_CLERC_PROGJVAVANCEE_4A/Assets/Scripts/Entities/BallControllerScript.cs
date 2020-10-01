@@ -58,6 +58,7 @@ public class BallControllerScript : MovingEntityScript
         speed = initSpeed;
 
     }
+
     public void ReflectBallDirection(float xDirection, float yDirection)
     {
         if (xDirection != 0 && yDirection != 0)

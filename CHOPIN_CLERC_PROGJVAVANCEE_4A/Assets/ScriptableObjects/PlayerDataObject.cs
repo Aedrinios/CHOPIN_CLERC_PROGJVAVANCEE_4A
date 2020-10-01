@@ -10,5 +10,5 @@ public class PlayerDataObject : ScriptableObject
 
     public KeyCode jumpInput, hitBallInput;
 
-    public Material playerMaterial;
+    public bool isPlayer = true;
 }

@@ -34,13 +34,14 @@ public class PlayerAttackSystem : MonoBehaviour
 
        /* float xInput = Input.GetAxis(playerData.HorizontalAxis);
         float yInput = Input.GetAxis(playerData.VerticalAxis);
-        if (Input.GetKeyDown(playerData.HitBallInput) && ballToHit != null && !isStun)
-            HitBall(xInput, yInput); */
+        if (Input.GetKeyDown(playerData.HitBallInput) && !isStun)
+            HitBall(xInput, yInput);
     }
 
-    private void HitBall(float x, float y)
+    public void HitBall(float x, float y)
     {
-        ballToHit.ReflectBallDirection(x, y);
+        if (ballToHit != null)
+            ballToHit.ReflectBallDirection(x, y);
     }
 
     /*public void StunAttack(BallControllerScript ball)

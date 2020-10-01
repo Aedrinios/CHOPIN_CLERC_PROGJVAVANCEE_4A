@@ -7,6 +7,9 @@ public class PlayerControllerScript : MovingEntityScript
 {
     private bool isControlledByPlayer;
     public bool IsControlledByPlayer;
+    [SerializeField]
+    private float timeBeforeRandomInput;
+    private float currentTimeBeforeRandomInput;
 
     private PlayerDataScript playerData;
 
@@ -28,9 +31,9 @@ public class PlayerControllerScript : MovingEntityScript
     
     private bool stopJump;
     private bool onGround;
-    private float xInput, yInput;
-    //
-   
+
+    private Vector3 playerVelocity;
+    private Vector3 rbVelocity;
     
     float maxVelocityChange = 10.0f;
     
@@ -44,7 +47,9 @@ public class PlayerControllerScript : MovingEntityScript
         playerData = GetComponent<PlayerDataScript>();
         this.GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-       
+        currentTimeBeforeRandomInput = timeBeforeRandomInput;
+
+       // controller = GetComponent<CharacterController>();
     }
 
     void FixedUpdate()
@@ -55,7 +60,7 @@ public class PlayerControllerScript : MovingEntityScript
 
     public override void Move()
     {////////////////////////////////////////
-        //if(isControlledByPlayer)
+        if(playerData.IsControlledByPlayer)
             MovePlayer();
        // else
            // MoveRandom();
@@ -64,28 +69,13 @@ public class PlayerControllerScript : MovingEntityScript
 
     private void MovePlayer()
     {
-        ///
-        inputAxis = Input.GetAxis(playerData.HorizontalAxis);
-        
-
-        ///
-        var targetVelocity = new Vector3(inputAxis, 0, 0);
-        targetVelocity = transform.TransformDirection(targetVelocity);
-        targetVelocity *= speed;
-        
-        // Apply a force that attempts to reach our target velocity
-        var velocity = rb.velocity;
-        var velocityChange = (targetVelocity - velocity);
-        velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-        velocityChange.y = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-
-        rb.AddForce(velocityChange, ForceMode.Force);
+        MoveToDirection(Input.GetAxis(playerData.HorizontalAxis));
         if (onGround)
         {
             // Jump
             if (Input.GetKeyDown(playerData.JumpInput))
             {
-                rb.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
+                Jump();
             }
         }
         onGround = false;
@@ -102,7 +92,60 @@ public class PlayerControllerScript : MovingEntityScript
 
     private void MoveRandom()
     {
+        Debug.Log("MoveRandom");
+        if(currentTimeBeforeRandomInput > 0)
+        {
+            currentTimeBeforeRandomInput -= Time.deltaTime;
+        }
+        else
+        {
+            int newRandomInput = Random.Range(0, 4);
+            switch (newRandomInput)
+            {
+                case 0:
+                    MoveToDirection(-1.0f);
+                    currentTimeBeforeRandomInput = timeBeforeRandomInput;
+                    break;
+                case 1:
+                    MoveToDirection(1.0f);
+                    currentTimeBeforeRandomInput = timeBeforeRandomInput;
+                    break;
+                case 2:
+                    Jump();
+                    break;
+                case 3:
+                    Hit();
+                    break;
+            }
+        }
+        rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));
+    }
 
+    private void MoveToDirection(float direction)
+    {
+        playerVelocity = new Vector3(direction, 0, 0);
+        playerVelocity = transform.TransformDirection(playerVelocity);
+        playerVelocity *= speed;
+
+        // Apply a force that attempts to reach our target velocity
+        rbVelocity = rb.velocity;
+        Vector3 velocityChange = (playerVelocity - rbVelocity);
+        velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+        velocityChange.y = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+
+        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector3(rbVelocity.x, CalculateJumpVerticalSpeed(), rbVelocity.z);
+    }
+
+    private void Hit()
+    {
+        float x = Random.Range(-1, 1);
+        float y = Random.Range(-1, 1);
+        transform.GetChild(0).GetComponent<PlayerAttackSystem>().HitBall(x, y);
     }
 
     void OnCollisionStay(Collision collision)

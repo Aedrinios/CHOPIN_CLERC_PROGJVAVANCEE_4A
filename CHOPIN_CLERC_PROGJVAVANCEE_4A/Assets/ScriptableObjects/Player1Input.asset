@@ -16,4 +16,4 @@ MonoBehaviour:
   verticalAxis: Vertical
   jumpInput: 32
   hitBallInput: 101
-  playerMaterial: {fileID: 2100000, guid: d636a499b076793418193b1dff458d2d, type: 2}
+  Player: 1
