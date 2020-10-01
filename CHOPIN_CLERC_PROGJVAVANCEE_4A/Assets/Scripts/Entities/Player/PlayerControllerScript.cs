@@ -18,10 +18,12 @@ public class PlayerControllerScript : MovingEntityScript
     [SerializeField]
     private LayerMask groundMask;
 
-    //private CharacterController controller;
+    private float inputAxis;
+    private Vector3 desiredMoveDirection;
     private Rigidbody rb;
     private Vector3 playerVelocity;
     private Vector3 impactVelocity;
+    
     [SerializeField]
     
     private bool stopJump;
@@ -40,37 +42,44 @@ public class PlayerControllerScript : MovingEntityScript
     {
         onGround = true;
         playerData = GetComponent<PlayerDataScript>();
+        this.GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-       // controller = GetComponent<CharacterController>();
+       
     }
 
     void FixedUpdate()
     {
-        Move();
+        
+       Move();
     }
 
     public override void Move()
     {////////////////////////////////////////
-        if(isControlledByPlayer)
+        //if(isControlledByPlayer)
             MovePlayer();
-        else
-            MoveRandom();
+       // else
+           // MoveRandom();
         // Calculate how fast we should be moving
     }
 
     private void MovePlayer()
     {
-        var targetVelocity = new Vector3(Input.GetAxis(playerData.HorizontalAxis), 0, 0);
+        ///
+        inputAxis = Input.GetAxis(playerData.HorizontalAxis);
+        
+
+        ///
+        var targetVelocity = new Vector3(inputAxis, 0, 0);
         targetVelocity = transform.TransformDirection(targetVelocity);
         targetVelocity *= speed;
-
+        
         // Apply a force that attempts to reach our target velocity
         var velocity = rb.velocity;
         var velocityChange = (targetVelocity - velocity);
         velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
         velocityChange.y = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
 
-        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        rb.AddForce(velocityChange, ForceMode.Force);
         if (onGround)
         {
             // Jump
@@ -83,6 +92,11 @@ public class PlayerControllerScript : MovingEntityScript
 
         // We apply gravity manually for more tuning control
         rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));
+
+        desiredMoveDirection = new Vector3(inputAxis, 0, 0);
+        desiredMoveDirection.Normalize();
+        if(desiredMoveDirection != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), 0.1f);
 
     }
 
@@ -116,6 +130,7 @@ public class PlayerControllerScript : MovingEntityScript
         rb.velocity = Vector3.zero;
         transform.position = playerData.PlayerSpawner;
         
+        
     }
     
 
@@ -137,7 +152,5 @@ public class PlayerControllerScript : MovingEntityScript
         // for the character to reach at the apex.
         return Mathf.Sqrt(2 * jumpHeight * gravityValue);
     }
-    
-
 
 }
