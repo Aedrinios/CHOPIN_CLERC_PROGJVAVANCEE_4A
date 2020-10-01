@@ -41,6 +41,12 @@ public class BallControllerScript : MovingEntityScript
             foreach (ContactPoint contact in contacts)
                 sumNormal += contact.normal;
             direction = Vector3.Reflect(direction, sumNormal);
+            if((direction.y <= 0.1f && direction.y >= -0.1f )|| (direction.x <= 0.1f && direction.y >= -0.1f)){
+                float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f);
+                float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
+                direction = new Vector3(xDirection, yDirection, 0.0f).normalized;
+            }
+
 
             speed++;
         }
