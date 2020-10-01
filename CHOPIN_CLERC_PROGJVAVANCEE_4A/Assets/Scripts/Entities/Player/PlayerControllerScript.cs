@@ -77,7 +77,9 @@ public class PlayerControllerScript : MovingEntityScript
     public void RespawnPlayer()
     {
         Debug.Log("Order :" + this.name);
+        controller.enabled = false;
         transform.position = playerData.PlayerSpawner;
+        controller.enabled = true;
     }
 
     private void OnCollisionEnter(Collision collision)
