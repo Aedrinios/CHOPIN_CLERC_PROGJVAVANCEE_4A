@@ -34,15 +34,14 @@ public class BallControllerScript : MovingEntityScript
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
-<<<<<<< HEAD
-             direction = Vector3.Reflect(direction , collision.GetContact(0).normal);
-=======
+
+
             ContactPoint[] contacts = collision.contacts;
             Vector3 sumNormal = Vector3.zero;
             foreach (ContactPoint contact in contacts)
                 sumNormal += contact.normal;
             direction = Vector3.Reflect(direction, sumNormal);
->>>>>>> 573c8885b6b68efe759ca73e183e4942ceff4e55
+
             speed++;
         }
 
