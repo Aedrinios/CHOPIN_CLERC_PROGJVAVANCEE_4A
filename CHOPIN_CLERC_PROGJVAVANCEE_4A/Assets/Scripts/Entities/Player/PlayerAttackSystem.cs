@@ -8,14 +8,14 @@ public class PlayerAttackSystem : MonoBehaviour
     private float attackOffsetTimer;
     private float currentAttackOffsetTimer;
 
-    private PlayerDataScript playerInput;
+    private PlayerDataScript playerData;
     private BallControllerScript ballToHit;
 
     private bool isBallCaught;
 
     private void Start()
     {
-        playerInput = transform.parent.GetComponent<PlayerDataScript>();
+        playerData = transform.parent.GetComponent<PlayerDataScript>();
         currentAttackOffsetTimer = attackOffsetTimer;
     }
 
@@ -31,14 +31,17 @@ public class PlayerAttackSystem : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(playerInput.HitBallInput) && ballToHit != null)
-            HitBall();
+        float xInput = Input.GetAxis(playerData.HorizontalAxis);
+        float yInput = Input.GetAxis(playerData.VerticalAxis);
+        if (Input.GetKeyDown(playerData.HitBallInput) && ballToHit != null)
+            HitBall(xInput, yInput);
     }
 
-    private void HitBall()
+    private void HitBall(float x, float y)
     {
+
         isBallCaught = true;
-        ballToHit.ReflectBallDirection();
+        ballToHit.ReflectBallDirection(x, y);
     }
 
     public void OnTriggerEnter(Collider other)
