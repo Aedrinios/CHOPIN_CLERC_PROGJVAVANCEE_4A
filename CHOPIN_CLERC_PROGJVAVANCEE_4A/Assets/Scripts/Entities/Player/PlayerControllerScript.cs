@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerControllerScript : MovingEntityScript
 {
+    private bool isControlledByPlayer;
+    public bool IsControlledByPlayer;
+
     private PlayerDataScript playerData;
 
     [Header("Physics Parameters")]
@@ -48,19 +51,26 @@ public class PlayerControllerScript : MovingEntityScript
 
     public override void Move()
     {////////////////////////////////////////
-        
-            // Calculate how fast we should be moving
-            var targetVelocity = new Vector3(Input.GetAxis(playerData.HorizontalAxis), 0, 0);
-            targetVelocity = transform.TransformDirection(targetVelocity);
-            targetVelocity *= speed;
+        if(isControlledByPlayer)
+            MovePlayer();
+        else
+            MoveRandom();
+        // Calculate how fast we should be moving
+    }
 
-            // Apply a force that attempts to reach our target velocity
-            var velocity = rb.velocity;
-            var velocityChange = (targetVelocity - velocity);
-            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            velocityChange.y = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+    private void MovePlayer()
+    {
+        var targetVelocity = new Vector3(Input.GetAxis(playerData.HorizontalAxis), 0, 0);
+        targetVelocity = transform.TransformDirection(targetVelocity);
+        targetVelocity *= speed;
 
-            rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        // Apply a force that attempts to reach our target velocity
+        var velocity = rb.velocity;
+        var velocityChange = (targetVelocity - velocity);
+        velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+        velocityChange.y = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+
+        rb.AddForce(velocityChange, ForceMode.VelocityChange);
         if (onGround)
         {
             // Jump
@@ -76,6 +86,11 @@ public class PlayerControllerScript : MovingEntityScript
 
     }
 
+    private void MoveRandom()
+    {
+
+    }
+
     void OnCollisionStay(Collision collision)
     {
 
@@ -88,9 +103,9 @@ public class PlayerControllerScript : MovingEntityScript
     {
         throw new System.NotImplementedException();
     }
+
     public void KnockbackPlayer(BallControllerScript ballHit)
     {
-       
        rb.AddForce(ballHit.Direction.normalized *5 * ballHit.Speed, (ForceMode.Force)) ;
     }
 
@@ -107,11 +122,13 @@ public class PlayerControllerScript : MovingEntityScript
         GetComponent<PlayerLifeSystem>().onPlayerTakeDamage += KnockbackPlayer;
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife += RespawnPlayer;
     }
+
     private void OnDisable()
     {
         GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= KnockbackPlayer;
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife -= RespawnPlayer;
     }
+
     float CalculateJumpVerticalSpeed()
     {
         // From the jump height and gravity we deduce the upwards speed 
