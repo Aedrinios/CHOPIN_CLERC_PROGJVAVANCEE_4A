@@ -34,7 +34,15 @@ public class BallControllerScript : MovingEntityScript
 
         if ((wallMask.value & (1 << collision.gameObject.layer)) > 0)
         {
+<<<<<<< HEAD
              direction = Vector3.Reflect(direction , collision.GetContact(0).normal);
+=======
+            ContactPoint[] contacts = collision.contacts;
+            Vector3 sumNormal = Vector3.zero;
+            foreach (ContactPoint contact in contacts)
+                sumNormal += contact.normal;
+            direction = Vector3.Reflect(direction, sumNormal);
+>>>>>>> 573c8885b6b68efe759ca73e183e4942ceff4e55
             speed++;
         }
 
@@ -45,14 +53,18 @@ public class BallControllerScript : MovingEntityScript
         speed = initSpeed;
 
     }
-    public void ReflectBallDirection()
+    public void ReflectBallDirection(float xDirection, float yDirection)
     {
-        direction = -direction;
+        if (xDirection != 0 && yDirection != 0)
+            direction = new Vector3(xDirection, yDirection, 0.0f).normalized;
+        else
+            direction = -direction;
         speed = speed * 1.2f;
     }
 
     public override void Move()
     {
+       // GetComponent<Rigidbody>().AddForce(direction.normalized * speed, ForceMode.Force);
         transform.position += direction.normalized * speed * Time.deltaTime;
     }
 
