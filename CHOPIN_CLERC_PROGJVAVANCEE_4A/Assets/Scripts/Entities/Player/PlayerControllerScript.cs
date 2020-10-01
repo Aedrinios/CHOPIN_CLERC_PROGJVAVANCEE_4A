@@ -60,27 +60,25 @@ public class PlayerControllerScript : MovingEntityScript
 
     private void Animate()
     {
-        if(Input.GetAxis(playerData.HorizontalAxis) != 0 && onGround)
+        if (onGround)
         {
-            Debug.Log("run !");
-            animator.SetBool("IsJumping", false);
-            animator.SetBool("IsRunning", true);
-        }
+            if (Input.GetAxis(playerData.HorizontalAxis) != 0)
+            {
+                Debug.Log("run !");
+                animator.SetTrigger("Run");
+            }
+            else
+            {
+                Debug.Log("Idle");
+                animator.SetTrigger("Idle");
 
-        else if (!onGround)
+            }
+        }
+        else
         {
             Debug.Log("Jump");
-
-            animator.SetBool("IsJumping", true);
+            animator.SetTrigger("Jump");
         }
-
-        else if (Input.GetAxis(playerData.HorizontalAxis) == 0 && onGround)
-        {
-            Debug.Log("Idle");
-            animator.SetBool("IsJumping", false);
-            animator.SetBool("IsRunning", false);
-        }
-
     }
 
     private void MovePlayer()
