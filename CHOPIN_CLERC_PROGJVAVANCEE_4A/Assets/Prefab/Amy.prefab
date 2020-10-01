@@ -1874,13 +1874,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  IsControlledByPlayer: 0
+  timeBeforeRandomInput: 3
   jumpForce: 15
   gravityValue: 40
   groundMask:
     serializedVersion: 2
     m_Bits: 512
-  stopJump: 0
 --- !u!114 &6138085597617897676
 MonoBehaviour:
   m_ObjectHideFlags: 0
