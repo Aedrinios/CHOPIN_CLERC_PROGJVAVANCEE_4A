@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class DeadZone : MonoBehaviour
 {
-    [SerializeField]
-    private LayerMask playerMask;
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Debug.Log("OUCH : " + collision.gameObject.name);
-        if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
-            collision.gameObject.GetComponent<PlayerLifeSystem>().onPlayerLoseLife?.Invoke();
+        Debug.Log("Controller hit : " + hit.gameObject.name);
+        //   if ((playerMask.value & (1 << hit.gameObject.layer)) > 0)
+        if (hit.collider.CompareTag("Respawn"))
+            GetComponent<PlayerLifeSystem>().onPlayerLoseLife?.Invoke();
     }
+
 }
+
