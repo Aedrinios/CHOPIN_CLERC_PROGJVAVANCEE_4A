@@ -1889,7 +1889,7 @@ Transform:
   m_LocalScale: {x: 82.54, y: 3, z: 81.94}
   m_Children: []
   m_Father: {fileID: 1020997013}
-  m_RootOrder: 13
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!65 &629894670
 BoxCollider:
@@ -2994,6 +2994,7 @@ Transform:
   - {fileID: 1390769168}
   - {fileID: 116275418}
   - {fileID: 1749470611}
+  - {fileID: 629894669}
   - {fileID: 1856547906}
   - {fileID: 2093432705}
   - {fileID: 484896394}
@@ -3003,7 +3004,6 @@ Transform:
   - {fileID: 841709789}
   - {fileID: 641952799}
   - {fileID: 1283202745}
-  - {fileID: 629894669}
   - {fileID: 482346310}
   - {fileID: 553997594}
   - {fileID: 1055258760}
@@ -4838,8 +4838,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 8801460532865239624, guid: 4b46ed0ea34f7d8419e5a9e34c682c83,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: e154af65a99795f47ba7cec0f43007d8, type: 2}
     - target: {fileID: 6955403614045589040, guid: ee68005f53f23824aa8db2574cd02f28,
         type: 3}
       propertyPath: m_LocalScale.z
