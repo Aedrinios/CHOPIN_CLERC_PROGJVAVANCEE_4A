@@ -15,5 +15,5 @@ MonoBehaviour:
   horizontalAxis: Horizontal
   verticalAxis: Vertical
   jumpInput: 32
-  hitBallInput: 101
-  Player: 1
+  hitBallInput: 99
+  isPlayer: 1
