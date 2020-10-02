@@ -131,7 +131,6 @@ ModelImporter:
   - 4b46ed0ea34f7d8419e5a9e34c682c83
   - 765e373665f1eeb48a4551ed78db3b56
   - cf8abb8454151f24ca30e6ba04b8dfd3
-  - d77fbfe4b4712a542a7f7035decd6f40
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
@@ -144,7 +143,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
