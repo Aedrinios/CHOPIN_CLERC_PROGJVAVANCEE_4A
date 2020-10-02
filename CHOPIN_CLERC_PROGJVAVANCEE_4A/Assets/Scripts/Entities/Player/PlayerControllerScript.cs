@@ -72,7 +72,6 @@ public class PlayerControllerScript : MovingEntityScript
                 animator.SetBool("IsRunning", true);
                 animator.SetBool("IsJumping", false);
                 animator.SetBool("IsJumping", false);
-                animationCount = 0;
             }
             else
             {
@@ -142,7 +141,6 @@ public class PlayerControllerScript : MovingEntityScript
             rotation.y = 180;
 
         body.rotation = rotation;
-        animationCount += Time.deltaTime;
         playerVelocity = transform.TransformDirection(playerVelocity);
         playerVelocity *= speed;
 
