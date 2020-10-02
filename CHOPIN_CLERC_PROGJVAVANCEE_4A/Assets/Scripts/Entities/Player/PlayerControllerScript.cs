@@ -34,8 +34,6 @@ public class PlayerControllerScript : MovingEntityScript
     float maxVelocityChange = 10.0f;
     
     float jumpHeight = 20.0f;
-
-    public float animationCount;
     //
 
     private void Start()
