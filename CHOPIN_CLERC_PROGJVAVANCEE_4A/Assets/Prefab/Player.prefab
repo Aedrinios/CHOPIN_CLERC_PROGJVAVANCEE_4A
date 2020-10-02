@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  timeBeforeRandomInput: 3
+  timeBeforeRandomInput: 1.5
   jumpForce: 15
   gravityValue: 40
   groundMask:

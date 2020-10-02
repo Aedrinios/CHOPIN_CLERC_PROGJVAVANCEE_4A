@@ -8,6 +8,7 @@ public class PlayerControllerScript : MovingEntityScript
     [SerializeField]
     private float timeBeforeRandomInput;
     private float currentTimeBeforeRandomInput;
+    private int randomInput = 0;
 
     private PlayerDataScript playerData;
 
@@ -24,6 +25,7 @@ public class PlayerControllerScript : MovingEntityScript
     private Vector3 playerVelocity;
        
     public bool onGround;
+    private float inputAxis;
 
     private Vector3 rbVelocity;
     private Animator animator;
@@ -102,30 +104,32 @@ public class PlayerControllerScript : MovingEntityScript
 
     private void MoveRandom()
     {
-        if(currentTimeBeforeRandomInput > 0)
+        if (currentTimeBeforeRandomInput > 0)
         {
             currentTimeBeforeRandomInput -= Time.deltaTime;
         }
         else
         {
-            int newRandomInput = Random.Range(0, 4);
-            switch (newRandomInput)
-            {
-                case 0:
-                    MoveToDirection(-1.0f);
-                    currentTimeBeforeRandomInput = timeBeforeRandomInput;
-                    break;
-                case 1:
-                    MoveToDirection(1.0f);
-                    currentTimeBeforeRandomInput = timeBeforeRandomInput;
-                    break;
-                case 2:
+            currentTimeBeforeRandomInput = timeBeforeRandomInput;
+            randomInput = Random.Range(0, 4);
+        }
+        switch (randomInput)
+        {
+            case 0:
+                MoveToDirection(-1.0f);
+                Debug.Log("WalkLeft");
+                break;
+            case 1:
+                MoveToDirection(1.0f);
+                Debug.Log("WalkRight");
+                break;
+            case 2:
+                if(onGround)
                     Jump();
-                    break;
-                case 3:
-                    Hit();
-                    break;
-            }
+                break;
+            case 3:
+                Hit();
+                break;
         }
         rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));
     }
