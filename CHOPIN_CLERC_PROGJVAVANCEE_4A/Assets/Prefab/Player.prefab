@@ -1667,7 +1667,7 @@ Transform:
   m_GameObject: {fileID: 7248454222007737681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 7248454223890494832}
   - {fileID: 6443588557121980914}
@@ -1719,7 +1719,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   onGround: 0
-  animationCount: 0
 --- !u!114 &-1374797852793456007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1732,6 +1731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b8bf64c4a156a46a1a7a6637f6fd53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDamageReceived: 999
   lifeRemaining: 2
 --- !u!114 &7973253749814655472
 MonoBehaviour:

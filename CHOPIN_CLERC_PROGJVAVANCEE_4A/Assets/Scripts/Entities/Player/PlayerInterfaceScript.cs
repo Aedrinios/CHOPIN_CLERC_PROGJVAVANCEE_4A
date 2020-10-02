@@ -21,11 +21,6 @@ public class PlayerInterfaceScript : MonoBehaviour
         playerLifeText.text = "Life : " + GetComponent<PlayerLifeSystem>().LifeRemaining;
     }
 
-    public void RefreshDamageUI(BallControllerScript ballHit)
-    {
-        playerDamageText.text = GetComponent<PlayerLifeSystem>().CurrentDamageReceived + " %";
-    }
-
     public void RefreshLifeUI()
     {
         playerLifeText.text = "Life : " + GetComponent<PlayerLifeSystem>().LifeRemaining;
@@ -33,15 +28,11 @@ public class PlayerInterfaceScript : MonoBehaviour
 
     private void OnEnable()
     {
-        
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife += RefreshLifeUI;
-        GetComponent<PlayerLifeSystem>().onPlayerTakeDamage += RefreshDamageUI;
     }  
     private void OnDisable()
     {
-       
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife -= RefreshLifeUI;
-        GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= RefreshDamageUI;
     }
 
     private void Update()

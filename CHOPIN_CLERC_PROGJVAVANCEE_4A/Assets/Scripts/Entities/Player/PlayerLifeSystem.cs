@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerLifeSystem : MonoBehaviour
 {
     [SerializeField]
+    private float maxDamageReceived;
+    [SerializeField]
     private int lifeRemaining;
     public int LifeRemaining {  get { return lifeRemaining; } }
 
@@ -39,16 +41,14 @@ public class PlayerLifeSystem : MonoBehaviour
 
     public void TakeDamage(BallControllerScript ballHit)
     {
-        currentDamageReceived += ballHit.Speed;
+        currentDamageReceived += Mathf.Clamp(ballHit.Speed, 0, maxDamageReceived);
         
     }
 
     public IEnumerator UnlistenTakeDamage(float timer)
     {
-        Debug.Log("unlisten");
         while (timer > 0)
         {
-            Debug.Log("while : " + timer);
             onPlayerTakeDamage -= TakeDamage;
             timer -= Time.deltaTime;
             yield return null;

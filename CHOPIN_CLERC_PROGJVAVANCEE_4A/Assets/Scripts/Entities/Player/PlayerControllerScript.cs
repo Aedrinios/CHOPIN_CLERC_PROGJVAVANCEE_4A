@@ -86,6 +86,9 @@ public class PlayerControllerScript : MovingEntityScript
             animator.SetBool("IsRunning", false);
             animator.SetBool("IsIdle", false);
         }
+
+        if (Input.GetKeyDown(playerData.HitBallInput))
+            animator.SetTrigger("Punch");
     }
 
     private void MovePlayer()
