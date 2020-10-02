@@ -16,4 +16,4 @@ MonoBehaviour:
   verticalAxis: VerticalP2
   jumpInput: 271
   hitBallInput: 256
-  isPlayer: 0
+  isPlayer: 1

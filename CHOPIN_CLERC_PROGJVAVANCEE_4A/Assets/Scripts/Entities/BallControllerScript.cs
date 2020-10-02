@@ -22,7 +22,7 @@ public class BallControllerScript : MovingEntityScript
     }
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
@@ -70,8 +70,9 @@ public class BallControllerScript : MovingEntityScript
 
     public override void Move()
     {
-       // GetComponent<Rigidbody>().AddForce(direction.normalized * speed, ForceMode.Force);
-        transform.position += direction.normalized * speed * Time.deltaTime;
+        GetComponent<Rigidbody>().velocity = direction.normalized * speed * Time.deltaTime *100;
+        
+       // transform.position += direction.normalized * speed * Time.deltaTime;
     }
 
     public override void Freeze()
