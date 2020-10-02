@@ -31,13 +31,13 @@ public class PlayerAttackSystem : MonoBehaviour
                 currentStunTimer = stunTimer;
             }
         }
-    
         float xInput = Input.GetAxis(playerData.HorizontalAxis);
         float yInput = Input.GetAxis(playerData.VerticalAxis);
         if (Input.GetKeyDown(playerData.HitBallInput) && !isStun)
             HitBall(xInput, yInput);
     }
 
+    
     public void HitBall(float x, float y)
     {
         if (ballToHit != null)

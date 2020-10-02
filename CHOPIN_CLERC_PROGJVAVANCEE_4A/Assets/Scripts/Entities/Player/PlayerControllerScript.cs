@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerControllerScript : MovingEntityScript
 {
-    private bool isControlledByPlayer;
-    public bool IsControlledByPlayer;
     [SerializeField]
     private float timeBeforeRandomInput;
     private float currentTimeBeforeRandomInput;
@@ -21,19 +19,14 @@ public class PlayerControllerScript : MovingEntityScript
     [SerializeField]
     private LayerMask groundMask;
 
-    private float inputAxis;
     private Vector3 desiredMoveDirection;
     private Rigidbody rb;
     private Vector3 playerVelocity;
-    private Vector3 impactVelocity;
-    
-    [SerializeField]
-    
-    private bool stopJump;
-    private bool onGround;
+       
+    public bool onGround;
 
     private Vector3 rbVelocity;
-    
+    private Animator animator;
     float maxVelocityChange = 10.0f;
     
     float jumpHeight = 20.0f;
@@ -44,7 +37,7 @@ public class PlayerControllerScript : MovingEntityScript
     {
         onGround = true;
         playerData = GetComponent<PlayerDataScript>();
-        this.GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         currentTimeBeforeRandomInput = timeBeforeRandomInput;
 
@@ -53,46 +46,62 @@ public class PlayerControllerScript : MovingEntityScript
 
     void FixedUpdate()
     {
-        
-       Move();
+        Move();
+        Animate();
     }
 
     public override void Move()
-    {////////////////////////////////////////
+    {
         if(playerData.IsControlledByPlayer)
             MovePlayer();
-       // else
-           // MoveRandom();
-        // Calculate how fast we should be moving
+        else
+           MoveRandom();
     }
 
-    private void MovePlayer()
+    private void Animate()
     {
         inputAxis = Input.GetAxis(playerData.HorizontalAxis);
         MoveToDirection(inputAxis);
         if (onGround)
         {
-            // Jump
-            if (Input.GetKeyDown(playerData.JumpInput))
+            if (Input.GetAxis(playerData.HorizontalAxis) != 0)
             {
-                Jump();
+                Debug.Log("run !");
+                animator.SetTrigger("Run");
+            }
+            else
+            {
+                Debug.Log("Idle");
+                animator.SetTrigger("Idle");
+
             }
         }
-        onGround = false;
+        else
+        {
+            Debug.Log("Jump");
+            animator.SetTrigger("Jump");
+        }
+    }
+
+    private void MovePlayer()
+    {
+        MoveToDirection(Input.GetAxis(playerData.HorizontalAxis));
+            // Jump
+        if (Input.GetKeyDown(playerData.JumpInput) && onGround)
+            Jump();
 
         // We apply gravity manually for more tuning control
         rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));
 
-        desiredMoveDirection = new Vector3(inputAxis, 0, 0);
+      /*  desiredMoveDirection = new Vector3(Input.GetAxis(playerData.HorizontalAxis), 0, 0);
         desiredMoveDirection.Normalize();
         if(desiredMoveDirection != Vector3.zero)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), 0.1f);
-
+      */    
     }
 
     private void MoveRandom()
     {
-        Debug.Log("MoveRandom");
         if(currentTimeBeforeRandomInput > 0)
         {
             currentTimeBeforeRandomInput -= Time.deltaTime;
@@ -139,16 +148,17 @@ public class PlayerControllerScript : MovingEntityScript
     private void Jump()
     {
         rb.velocity = new Vector3(rbVelocity.x, CalculateJumpVerticalSpeed(), rbVelocity.z);
+        onGround = false;
     }
 
     private void Hit()
     {
         float x = Random.Range(-1, 1);
         float y = Random.Range(-1, 1);
-        transform.GetChild(0).GetComponent<PlayerAttackSystem>().HitBall(x, y);
+       // transform.GetChild(0).GetComponent<PlayerAttackSystem>().HitBall(x, y);
     }
 
-    void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
 
         if(collision.transform.tag == "Floor")
