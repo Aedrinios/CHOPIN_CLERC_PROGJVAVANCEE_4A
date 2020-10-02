@@ -23,12 +23,35 @@ public class GameManager : MonoBehaviour
     private List<Transform> spawnPositionList = new List<Transform>();
 
     private List<GameObject> players = new List<GameObject>();
+    private List<MovingEntityScript> entities = new List<MovingEntityScript>();
     private Transform gameplayTransform;
+    private Transform pauseTransform;
 
     private void Awake()
     {
         gameplayTransform = GameObject.Find("Gameplay").transform;
         StartCoroutine(InitializeGame(2));
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (pauseTransform.GetChild(0).gameObject.activeSelf)
+            {
+                pauseTransform.GetChild(0).gameObject.SetActive(false);
+                foreach (MovingEntityScript entity in entities)
+                    entity.IsEntityActive = true;
+            }
+            else
+            {
+                pauseTransform.GetChild(0).gameObject.SetActive(true);
+                foreach (MovingEntityScript entity in entities)
+                    entity.IsEntityActive = false;
+
+            }
+        }
+
     }
 
     private IEnumerator InitializeGame(int id)
@@ -52,9 +75,10 @@ public class GameManager : MonoBehaviour
         {
             GameObject newPlayer = Instantiate(gameData.PlayerPrefab, spawnPositionList[i].position, Quaternion.identity, gameplayTransform);
             newPlayer.GetComponent<PlayerDataScript>().SetPlayerData(gameData.PlayerData[i], spawnPositionList[i].position,  "Player" + (i + 1), (i + 1));
-            //newPlayer.transform.GetChild(0).GetComponent<MeshRenderer>().material = gameData.Inputs[i].playerMaterial;
             players.Add(newPlayer);
         }
+
+        pauseTransform = GameObject.Find("PausePanel").transform;
     }
 
 

@@ -78,9 +78,4 @@ public class BallControllerScript : MovingEntityScript
         
        // transform.position += direction.normalized * speed * Time.deltaTime;
     }
-
-    public override void Freeze()
-    {
-        throw new NotImplementedException();
-    }
 }

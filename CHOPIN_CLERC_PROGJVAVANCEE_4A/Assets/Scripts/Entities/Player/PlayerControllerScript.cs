@@ -177,12 +177,6 @@ public class PlayerControllerScript : MovingEntityScript
             onGround = true;
     }
 
-
-    public override void Freeze()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void KnockbackPlayer(BallControllerScript ballHit)
     {
         Vector3 forceKnockback = ballHit.Direction;

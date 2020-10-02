@@ -4,11 +4,17 @@ using UnityEngine;
 
 public abstract class MovingEntityScript : MonoBehaviour
 {
-    public Vector3 direction;
+    protected Vector3 direction;
     public Vector3 Direction
     {
         get { return direction; }
         set { direction = value; }
+    }
+
+    protected bool isEntityActive;
+    public bool IsEntityActive
+    {
+        set { isEntityActive = value; }
     }
 
     [SerializeField]
@@ -16,5 +22,4 @@ public abstract class MovingEntityScript : MonoBehaviour
     public float Speed { get { return speed; } }
 
     public abstract void Move();
-    public abstract void Freeze();
 }
