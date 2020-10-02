@@ -14,8 +14,6 @@ public class BallControllerScript : MovingEntityScript
     private float initSpeed;
     private Rigidbody rb;
 
-    public Vector3 directionNormal;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,8 +26,7 @@ public class BallControllerScript : MovingEntityScript
     // Update is called once per frame
     private void FixedUpdate()
     {
-        directionNormal = direction.normalized;
-        Move();
+            Move();
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     private List<Transform> spawnPositionList = new List<Transform>();
 
     private List<GameObject> players = new List<GameObject>();
-    private List<MovingEntityScript> entities = new List<MovingEntityScript>();
     private Transform gameplayTransform;
     private Transform pauseTransform;
 
@@ -40,15 +39,12 @@ public class GameManager : MonoBehaviour
             if (pauseTransform.GetChild(0).gameObject.activeSelf)
             {
                 pauseTransform.GetChild(0).gameObject.SetActive(false);
-                foreach (MovingEntityScript entity in entities)
-                    entity.IsEntityActive = true;
+                Time.timeScale = 1;
             }
             else
             {
                 pauseTransform.GetChild(0).gameObject.SetActive(true);
-                foreach (MovingEntityScript entity in entities)
-                    entity.IsEntityActive = false;
-
+                Time.timeScale = 0;
             }
         }
 

@@ -11,12 +11,6 @@ public abstract class MovingEntityScript : MonoBehaviour
         set { direction = value; }
     }
 
-    protected bool isEntityActive;
-    public bool IsEntityActive
-    {
-        set { isEntityActive = value; }
-    }
-
     [SerializeField]
     protected float speed;
     public float Speed { get { return speed; } }
