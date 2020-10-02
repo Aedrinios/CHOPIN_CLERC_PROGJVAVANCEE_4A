@@ -26,12 +26,13 @@ public class GameManager : MonoBehaviour
     private Transform gameplayTransform;
     private Transform pauseTransform;
 
-    private void Awake()
+    private void Start()
     {
+        Time.timeScale = 1;
         gameplayTransform = GameObject.Find("Gameplay").transform;
         StartCoroutine(InitializeGame(2));
-    }
 
+    }
     private void Update()
     {
         if (Input.GetButtonDown("Cancel"))
@@ -52,14 +53,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator InitializeGame(int id)
     {
-        float chrono = 0;
-
-        while (chrono <= 0.25f)
-        {
-            chrono += Time.deltaTime;
-            yield return null;
-        }
-
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(id, LoadSceneMode.Additive);
 
         while (!asyncLoad.isDone)
@@ -94,7 +87,5 @@ public class GameManager : MonoBehaviour
         victoryScreen.GetChild(0).gameObject.SetActive(true);
         victoryScreen.GetChild(1).gameObject.SetActive(true);
         victoryScreen.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = players[0].GetComponent<PlayerDataScript>().PlayerName + " wins !";
-        
-        
     }
 }
