@@ -33,13 +33,19 @@ public class PlayerInterfaceScript : MonoBehaviour
 
     private void OnEnable()
     {
-        GetComponent<PlayerLifeSystem>().onPlayerTakeDamage += RefreshDamageUI;
+        
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife += RefreshLifeUI;
+        GetComponent<PlayerLifeSystem>().onPlayerTakeDamage += RefreshDamageUI;
     }  
     private void OnDisable()
     {
-        GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= RefreshDamageUI;
+       
         GetComponent<PlayerLifeSystem>().onPlayerLoseLife -= RefreshLifeUI;
+        GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= RefreshDamageUI;
+    }
 
+    private void Update()
+    {
+        playerDamageText.text = GetComponent<PlayerLifeSystem>().CurrentDamageReceived + " %";
     }
 }

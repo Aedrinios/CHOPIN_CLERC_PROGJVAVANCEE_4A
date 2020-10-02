@@ -26,7 +26,7 @@ public class PlayerLifeSystem : MonoBehaviour
         if (lifeRemaining >= 1)
         {
             lifeRemaining--;
-
+            currentDamageReceived = 0;
         }
 
         if (lifeRemaining == 0)
@@ -40,6 +40,7 @@ public class PlayerLifeSystem : MonoBehaviour
     public void TakeDamage(BallControllerScript ballHit)
     {
         currentDamageReceived += ballHit.Speed;
+        
     }
 
     public void Die()
@@ -55,15 +56,17 @@ public class PlayerLifeSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        onPlayerTakeDamage += TakeDamage;
         onPlayerLoseLife += LoseOneLife;
+        onPlayerTakeDamage += TakeDamage;
+        
         onPlayerDie += Die;
     }
 
     private void OnDisable()
     {
-        onPlayerTakeDamage -= TakeDamage;
         onPlayerLoseLife -= LoseOneLife;
+        onPlayerTakeDamage -= TakeDamage;
+       
         onPlayerDie -= Die;
     }
 }
