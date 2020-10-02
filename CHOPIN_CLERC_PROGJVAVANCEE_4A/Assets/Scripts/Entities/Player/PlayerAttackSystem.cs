@@ -31,8 +31,8 @@ public class PlayerAttackSystem : MonoBehaviour
                 currentStunTimer = stunTimer;
             }
         }
-
-       /* float xInput = Input.GetAxis(playerData.HorizontalAxis);
+    
+        float xInput = Input.GetAxis(playerData.HorizontalAxis);
         float yInput = Input.GetAxis(playerData.VerticalAxis);
         if (Input.GetKeyDown(playerData.HitBallInput) && !isStun)
             HitBall(xInput, yInput);
@@ -44,7 +44,7 @@ public class PlayerAttackSystem : MonoBehaviour
             ballToHit.ReflectBallDirection(x, y);
     }
 
-    /*public void StunAttack(BallControllerScript ball)
+    public void StunAttack(BallControllerScript ball)
     {
         isStun = true;
     }
@@ -56,7 +56,7 @@ public class PlayerAttackSystem : MonoBehaviour
     private void OnDisable()
     {
         transform.parent.GetComponent<PlayerLifeSystem>().onPlayerTakeDamage -= StunAttack;
-    }*/
+    }
 
 
     public void OnTriggerEnter(Collider other)

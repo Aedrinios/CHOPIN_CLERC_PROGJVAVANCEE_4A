@@ -32,7 +32,6 @@ public class PlayerControllerScript : MovingEntityScript
     private bool stopJump;
     private bool onGround;
 
-    private Vector3 playerVelocity;
     private Vector3 rbVelocity;
     
     float maxVelocityChange = 10.0f;
@@ -69,7 +68,8 @@ public class PlayerControllerScript : MovingEntityScript
 
     private void MovePlayer()
     {
-        MoveToDirection(Input.GetAxis(playerData.HorizontalAxis));
+        inputAxis = Input.GetAxis(playerData.HorizontalAxis);
+        MoveToDirection(inputAxis);
         if (onGround)
         {
             // Jump
