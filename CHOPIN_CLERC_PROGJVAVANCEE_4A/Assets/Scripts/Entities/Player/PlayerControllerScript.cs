@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class PlayerControllerScript : MovingEntityScript
 {
     [SerializeField]
+    private Transform body;
+
+    [SerializeField]
     private float timeBeforeRandomInput;
     private float currentTimeBeforeRandomInput;
     private int randomInput = 0;
@@ -20,7 +23,6 @@ public class PlayerControllerScript : MovingEntityScript
     [SerializeField]
     private LayerMask groundMask;
 
-    private Vector3 desiredMoveDirection;
     private Rigidbody rb;
     private Vector3 playerVelocity;
        
@@ -32,14 +34,15 @@ public class PlayerControllerScript : MovingEntityScript
     float maxVelocityChange = 10.0f;
     
     float jumpHeight = 20.0f;
-    
+
+    public float animationCount;
     //
 
     private void Start()
     {
         onGround = true;
         playerData = GetComponent<PlayerDataScript>();
-        animator = GetComponentInChildren<Animator>();
+        animator = body.GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         currentTimeBeforeRandomInput = timeBeforeRandomInput;
 
@@ -68,20 +71,23 @@ public class PlayerControllerScript : MovingEntityScript
         {
             if (Input.GetAxis(playerData.HorizontalAxis) != 0)
             {
-                Debug.Log("run !");
-                animator.SetTrigger("Run");
+                animator.SetBool("IsRunning", true);
+                animator.SetBool("IsJumping", false);
+                animator.SetBool("IsJumping", false);
+                animationCount = 0;
             }
             else
             {
-                Debug.Log("Idle");
-                animator.SetTrigger("Idle");
-
+                animator.SetBool("IsIdle", true);
+                animator.SetBool("IsRunning", false);
+                animator.SetBool("IsJumping", false);
             }
         }
         else
         {
-            Debug.Log("Jump");
-            animator.SetTrigger("Jump");
+            animator.SetBool("IsJumping", true);
+            animator.SetBool("IsRunning", false);
+            animator.SetBool("IsIdle", false);
         }
     }
 
@@ -93,13 +99,7 @@ public class PlayerControllerScript : MovingEntityScript
             Jump();
 
         // We apply gravity manually for more tuning control
-        rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));
-
-      /*  desiredMoveDirection = new Vector3(Input.GetAxis(playerData.HorizontalAxis), 0, 0);
-        desiredMoveDirection.Normalize();
-        if(desiredMoveDirection != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), 0.1f);
-      */    
+        rb.AddForce(new Vector3(0, -gravityValue * rb.mass, 0));  
     }
 
     private void MoveRandom()
@@ -137,6 +137,14 @@ public class PlayerControllerScript : MovingEntityScript
     private void MoveToDirection(float direction)
     {
         playerVelocity = new Vector3(direction, 0, 0);
+        Quaternion rotation = body.rotation;
+        if (direction < 0)
+            rotation.y = 0;
+        else
+            rotation.y = 180;
+
+        body.rotation = rotation;
+        animationCount += Time.deltaTime;
         playerVelocity = transform.TransformDirection(playerVelocity);
         playerVelocity *= speed;
 
