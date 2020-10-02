@@ -6,9 +6,11 @@ public class PlayerLifeSystem : MonoBehaviour
 {
     [SerializeField]
     private int lifeRemaining;
+    public int LifeRemaining {  get { return lifeRemaining; } }
 
     private float currentDamageReceived;
     public float CurrentDamageReceived { get { return currentDamageReceived; } }
+    
 
     public delegate void OnPlayerTakeDamage(BallControllerScript ballHit);
     public OnPlayerTakeDamage onPlayerTakeDamage;
@@ -22,7 +24,10 @@ public class PlayerLifeSystem : MonoBehaviour
     public void LoseOneLife()
     {
         if (lifeRemaining >= 1)
+        {
             lifeRemaining--;
+
+        }
 
         if (lifeRemaining == 0)
         {
