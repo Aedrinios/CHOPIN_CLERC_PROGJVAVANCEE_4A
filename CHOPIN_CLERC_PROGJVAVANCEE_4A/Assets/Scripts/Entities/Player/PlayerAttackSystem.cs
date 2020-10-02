@@ -25,6 +25,7 @@ public class PlayerAttackSystem : MonoBehaviour
         if (isStun)
         {
             currentStunTimer -= Time.deltaTime;
+            Invincibility(3f);
             if (currentStunTimer <= 0)
             {
                 isStun = false;
@@ -45,9 +46,14 @@ public class PlayerAttackSystem : MonoBehaviour
         {
             Debug.Log("Success Hit");
             ballToHit.ReflectBallDirection(x, y);
+            Invincibility(1f);
         }
     }
 
+    private void Invincibility(float timerInvicibility)
+    {
+        StartCoroutine(transform.parent.GetComponent<PlayerLifeSystem>().UnlistenTakeDamage(timerInvicibility));
+    }
     public void StunAttack(BallControllerScript ball)
     {
         isStun = true;

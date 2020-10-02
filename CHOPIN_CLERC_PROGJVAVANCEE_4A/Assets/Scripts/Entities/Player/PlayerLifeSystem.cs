@@ -43,6 +43,18 @@ public class PlayerLifeSystem : MonoBehaviour
         
     }
 
+    public IEnumerator UnlistenTakeDamage(float timer)
+    {
+        Debug.Log("unlisten");
+        while (timer > 0)
+        {
+            Debug.Log("while : " + timer);
+            onPlayerTakeDamage -= TakeDamage;
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        onPlayerTakeDamage += TakeDamage;
+    }
     public void Die()
     {
         gameObject.SetActive(false);
@@ -57,6 +69,7 @@ public class PlayerLifeSystem : MonoBehaviour
     private void OnEnable()
     {
         onPlayerLoseLife += LoseOneLife;
+        
         onPlayerTakeDamage += TakeDamage;
         
         onPlayerDie += Die;
