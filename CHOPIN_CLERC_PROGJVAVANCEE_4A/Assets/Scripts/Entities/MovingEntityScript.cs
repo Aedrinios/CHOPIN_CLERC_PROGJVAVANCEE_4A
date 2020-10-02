@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class MovingEntityScript : MonoBehaviour
 {
-    protected Vector3 direction;
+    public Vector3 direction;
     public Vector3 Direction
     {
         get { return direction; }

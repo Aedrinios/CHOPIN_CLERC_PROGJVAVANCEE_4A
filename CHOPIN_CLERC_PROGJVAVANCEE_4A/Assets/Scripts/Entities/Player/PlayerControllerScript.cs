@@ -159,7 +159,7 @@ public class PlayerControllerScript : MovingEntityScript
     {
         float x = Random.Range(-1, 1);
         float y = Random.Range(-1, 1);
-       // transform.GetChild(0).GetComponent<PlayerAttackSystem>().HitBall(x, y);
+        transform.GetChild(0).GetComponent<PlayerAttackSystem>().HitBall(x, y);
     }
 
     void OnCollisionEnter(Collision collision)

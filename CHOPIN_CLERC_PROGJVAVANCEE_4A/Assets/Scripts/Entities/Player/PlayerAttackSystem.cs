@@ -40,8 +40,12 @@ public class PlayerAttackSystem : MonoBehaviour
     
     public void HitBall(float x, float y)
     {
+        Debug.Log("Try Hit");
         if (ballToHit != null)
+        {
+            Debug.Log("Success Hit");
             ballToHit.ReflectBallDirection(x, y);
+        }
     }
 
     public void StunAttack(BallControllerScript ball)

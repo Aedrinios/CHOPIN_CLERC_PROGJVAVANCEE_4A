@@ -12,10 +12,14 @@ public class BallControllerScript : MovingEntityScript
     private LayerMask wallMask;
 
     private float initSpeed;
+    private Rigidbody rb;
+
+    public Vector3 directionNormal;
 
     private void Start()
     {
-        float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f); 
+        rb = GetComponent<Rigidbody>();
+        float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f);
         float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
         direction = new Vector3(xDirection,yDirection,0.0f);
         initSpeed = speed;
@@ -24,11 +28,13 @@ public class BallControllerScript : MovingEntityScript
     // Update is called once per frame
     private void FixedUpdate()
     {
+        directionNormal = direction.normalized;
         Move();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        rb.velocity = Vector3.zero;
         if ((playerMask.value & (1 << collision.gameObject.layer)) > 0)
             collision.gameObject.GetComponent<PlayerLifeSystem>().RaiseOnPlayerDamageEvent(this);
 
@@ -41,16 +47,15 @@ public class BallControllerScript : MovingEntityScript
             foreach (ContactPoint contact in contacts)
                 sumNormal += contact.normal;
             direction = Vector3.Reflect(direction, sumNormal);
-            if((direction.y <= 0.1f && direction.y >= -0.1f )|| (direction.x <= 0.1f && direction.y >= -0.1f)){
-                float xDirection = UnityEngine.Random.Range(-1.0f, 1.0f);
-                float yDirection = UnityEngine.Random.Range(0.0f, 1.0f);
-                direction = new Vector3(xDirection, yDirection, 0.0f).normalized;
-            }
+            Debug.Log("Direction : " + direction);
+            if((direction.y >= 0.8f || direction.y <= -0.8f) && direction.x <= 0.3f && direction.x >= -0.3)
+                direction.x = UnityEngine.Random.Range(-1.0f, 1.0f);
 
+            if ((direction.x >= 0.8f || direction.x <= -0.8f) && direction.y <= 0.3f && direction.y >= -0.3)
+                direction.y = UnityEngine.Random.Range(-1.0f, 1.0f);
 
-            speed++;
+                speed++;
         }
-
     }
 
     public void ResetBallSpeed()
@@ -70,7 +75,7 @@ public class BallControllerScript : MovingEntityScript
 
     public override void Move()
     {
-        GetComponent<Rigidbody>().velocity = direction.normalized * speed * Time.deltaTime *100;
+        rb.velocity = direction.normalized * speed * Time.deltaTime *100;
         
        // transform.position += direction.normalized * speed * Time.deltaTime;
     }
